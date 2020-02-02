@@ -1,10 +1,10 @@
 # Pages structure
 
-## Page1
+## Homepage
 
 - description1
 
-### Page1-2
+### Timetable page
 
 - description1-2
 
