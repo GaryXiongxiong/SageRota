@@ -1,6 +1,6 @@
 # Pages structure
 
-## Page 1
+## Homepage
 
 - description1
 
