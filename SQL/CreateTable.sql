@@ -4,9 +4,7 @@ CREATE TABLE IF NOT EXISTS `timetable`.`shifts` (
   `starttime` DATE NOT NULL,
   `endtime` DATE NOT NULL,
   `location` varchar(150) DEFAULT NULL COMMENT ' the place a staff working now',
-  `duration` double NOT NULL COMMENT 'Duration of this time (hour)',
-  `date` date NOT NULL,
-  `title` varchar(45) DEFAULT NULL COMMENT 'description of this work.(for example: night-shift,day-shift )',
+  `remark` varchar(300) DEFAULT NULL COMMENT 'description of this work.(for example: night-shift,day-shift )',
   PRIMARY KEY (`id`),
   INDEX `fk_timetable_Staff_idx` (`Staff_sid` ASC) VISIBLE,
   CONSTRAINT `fk_timetable_Staff`
