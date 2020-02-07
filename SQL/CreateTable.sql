@@ -18,6 +18,9 @@ CREATE TABLE IF NOT EXISTS `timetable`.`staff` (
   `sid` INT NOT NULL,
   `first_name` VARCHAR(45) NOT NULL,
   `last_name` VARCHAR(45) NOT NULL,
+  `phone_number` VARCHAR(12) NOT NULL,
+  `e_mail` VARCHAR(30) NOT NULL,
+  `job_title` VARCHAR(30) NOT NULL,
   `gender` tinyint(4) NOT NULL COMMENT '1:male 0:female',
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1: not working;2: at working;3:quit job',
   PRIMARY KEY (`sid`))
