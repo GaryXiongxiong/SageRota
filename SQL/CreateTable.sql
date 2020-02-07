@@ -1,11 +1,13 @@
-CREATE TABLE IF NOT EXISTS `timetable`.`shifts` (
-  `id` INT NOT NULL,
-  `Staff_sid` INT NOT NULL,
-  `starttime` DATE NOT NULL,
-  `endtime` DATE NOT NULL,
+CREATE TABLE IF NOT EXISTS `timetable`.`shift` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `staff_sid` int(11) NOT NULL,
+  `start_time` date NOT NULL,
+  `end_time` DATE NOT NULL,
   `location` varchar(150) DEFAULT NULL COMMENT ' the place a staff working now',
   `remark` varchar(300) DEFAULT NULL COMMENT 'description of this work.(for example: night-shift,day-shift )',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `start_time_UNIQUE` (`start_time`),
+  UNIQUE KEY `end_time_UNIQUE` (`end_time`),
   INDEX `fk_timetable_Staff_idx` (`Staff_sid` ASC) VISIBLE,
   CONSTRAINT `fk_timetable_Staff`
     FOREIGN KEY (`Staff_sid`)
@@ -15,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `timetable`.`shifts` (
 ENGINE = InnoDB
 
 CREATE TABLE IF NOT EXISTS `timetable`.`staff` (
-  `sid` INT NOT NULL,
+  `sid` int(11) NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR(45) NOT NULL,
   `last_name` VARCHAR(45) NOT NULL,
   `phone_number` VARCHAR(12) NOT NULL,
