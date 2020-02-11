@@ -1,0 +1,7 @@
+{
+  "user": "timetable_user",
+  "password": "Team@6",
+  "host": "localhost",
+  "dbname": "timetable",
+  "port": "3306"
+}
