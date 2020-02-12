@@ -1,14 +1,15 @@
 CREATE TABLE IF NOT EXISTS `timetable`.`shifts` (
   `id` INT NOT NULL,
-  `Staff_sid` INT NOT NULL,
-  `starttime` DATE NOT NULL,
-  `endtime` DATE NOT NULL,
+  `staff_sid` INT NOT NULL,
+  `start_time` DATE NOT NULL,
+  `end_time` DATE NOT NULL,
   `location` varchar(150) DEFAULT NULL COMMENT ' the place a staff working now',
   `remark` varchar(300) DEFAULT NULL COMMENT 'description of this work.(for example: night-shift,day-shift )',
+  UNIQUE (`start_time`,`end_time`),
   PRIMARY KEY (`id`),
-  INDEX `fk_timetable_Staff_idx` (`Staff_sid` ASC) VISIBLE,
+  INDEX `fk_timetable_Staff_idx` (`staff_sid` ASC) VISIBLE,
   CONSTRAINT `fk_timetable_Staff`
-    FOREIGN KEY (`Staff_sid`)
+    FOREIGN KEY (`staff_sid`)
     REFERENCES `timetable`.`staff` (`sid`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
