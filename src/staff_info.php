@@ -11,7 +11,7 @@
     $result = $query->get_result()->fetch_all();
     $query->close();
     $conn->close();
-    $resDict = array(
+    $staff = array(
         "sid"=>$result[0][0],
         "first_name"=>$result[0][1],
         "last_name"=>$result[0][2],
@@ -20,6 +20,10 @@
         "job_title"=>$result[0][5],
         "gender"=>$result[0][6],
         "status"=>$result[0][7]
+    );
+    $staffs = array($staff);
+    $resDict = array(
+        "staff"=>$staffs
     );
     $resJson = json_encode($resDict);
     echo $resJson;
