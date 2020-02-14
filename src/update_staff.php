@@ -23,7 +23,7 @@
         
         $updateQuery = $conn->prepare("UPDATE staff SET first_name=?, last_name=?, phone_number=?, e_mail=?, 
         job_title=?, gender=?, status=? WHERE sid=?;");
-        $updateQuery->bind_param("isssssbb",$sid,$fname,$lname,$phoneNumber,$email,$jobTitle,$gender,$status);
+        $updateQuery->bind_param("sssssiii",$fname,$lname,$phoneNumber,$email,$jobTitle,$gender,$status,$sid);
         if ($updateQuery->execute()) {
             //$updateQuery->execute();
             $flag = "success";
