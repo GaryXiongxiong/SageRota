@@ -30,6 +30,7 @@ if(!$conn) {
 
 	if (count($result) != 0) {
     	$flag = "fail";
+    	$staff=array();
     } else {
 
     	// sql query to insert values
