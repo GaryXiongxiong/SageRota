@@ -1,5 +1,4 @@
 
-
 CREATE TABLE IF NOT EXISTS `timetable`.`staff` (
   `sid` int NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR(45) NOT NULL,
