@@ -9,7 +9,9 @@ CREATE TABLE IF NOT EXISTS `timetable`.`staff` (
   `job_title` VARCHAR(30) NOT NULL,
   `gender` tinyint(4) NOT NULL COMMENT '1:male 0:female',
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1: not working;2: at working;3:quit job',
-  PRIMARY KEY (`sid`))
+  PRIMARY KEY (`sid`),
+  UNIQUE KEY `phone_number_UNIQUE` (`phone_number`),
+  UNIQUE KEY `e_mail_UNIQUE` (`e_mail`))
 ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `timetable`.`shift` (
