@@ -10,56 +10,65 @@ if(!$conn) {
 	echo "Connection error" . mysqli_connect_error();
 }
 
-	// sql query to be sent to database
-	$sql = "SELECT * FROM staff WHERE sid = ? and first_name = ?";
+$name = $_REQUEST['first_name'];
+$email = $_REQUEST['e_mail'];
+
+// sql query to be sent to database
+$sql = "SELECT * FROM staff WHERE first_name = ? AND e_mail = ?";
+
+// prepare statement
+$stmt = $conn->prepare($sql);
+
+// bind statement
+$stmt->bind_param('ss', $name, $email);
+
+// execute statement
+$stmt->execute();
+
+// fetch results of query and store it as an associative array
+$result = $stmt->get_result()->fetch_all();
+
+// initiate array to be returned
+$staff = array();
+
+if (count($result) != 0) {
+	$flag = "fail";
+} else {
+	$surname = $_REQUEST['last_name'];
+	$phone = $_REQUEST['phone_number'];
+	$title = $_REQUEST['job_title'];
+	$gender = $_REQUEST['gender'];
+	$status = $_REQUEST['status'];
+
+	// sql query to insert values
+	$sql_in = "INSERT INTO staff(first_name, last_name, phone_number, e_mail, job_title, gender, status) 
+	VALUES(?, ?, ?, ?, ?, ?, ?)";
 
 	// prepare statement
-	$stmt = $conn->prepare($sql);
+	$stmt_in = $conn->prepare($sql_in);
 
 	// bind statement
-	$stmt->bind_param('is', $sid, $name);
-	
-	$sid = $_REQUEST['sid'];
-	$name = $_REQUEST['first_name'];
+	$stmt_in->bind_param('sssssii', $name, $surname, $phone, $email, $title, $gender, $status);
 
 	// execute statement
-	$stmt->execute();
+	if($stmt_in->execute()) {
+		$flag = "success";
+		//sql statement to get sid
+		$sql_sid = "SELECT sid FROM staff WHERE first_name = ? AND e_mail = ?";
+		
+		// prepare statement
+		$stmt_sid = $conn->prepare($sql_sid);
 
-	// fetch results of query and store it as an associative array
-	$result = $stmt->get_result()->fetch_all();
+		// bind and execute statement
+		$stmt_sid->bind_param('ss', $name, $email);
+		$stmt_sid->execute();
 
-	if (count($result) != 0) {
-    	$flag = "fail";
-    	$staff=array();
-    } else {
+		// get the result of query
+		$result = $stmt_sid->get_result()->fetch_all();
 
-    	// sql query to insert values
-    	$sql_in = "INSERT INTO staff(sid, first_name, last_name, phone_number, e_mail, job_title, gender, status) 
-    	VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
-
-    	// prepare statement
-    	$stmt_in = $conn->prepare($sql_in);
-
-    	// bind statement
-    	$stmt_in->bind_param('isssssii', $sid, $name, $surname, $phone, $email, $title, $gender, $status);
-
-    	$surname = $_REQUEST['last_name'];
-    	$phone = $_REQUEST['phone'];
-    	$email = $_REQUEST['email'];
-    	$title = $_REQUEST['title'];
-    	$gender = $_REQUEST['gender'];
-    	$status = $_REQUEST['status'];
-
-    	// execute statement
-    	if($stmt_in->execute()) {
-    		$flag = "success";
-    	} else {
-    		$flag = "fail";
-    	}
-
-    	// create a staff array to return
+		// create a staff array to return
 		$staff = array(
-			"sid" => $sid,
+			"sid" => $result[0][0],
 			"first_name" => $name,
 			"last_name" => $surname,
 			"phone_number" => $phone,
@@ -69,18 +78,21 @@ if(!$conn) {
 			"status" => $status
 		);
 
-    	$staffs = array($staff);
-		$resDict = array(
-			"result" => $flag,
-			"staff" => $staffs
-		);
+	} else {
+		$flag = "fail";
+	}
+}
 
-    	// close statements and connection to db
-    	$stmt->close();
-    	$stmt_in->close();
-    	$conn->close();
-    }
+$staffs = array($staff);
+$resDict = array(
+	"result" => $flag,
+	"staff" => $staffs
+);
 
-    $resJson = json_encode($resDict);
-	echo $resJson;
+// close statements and connection to db
+$stmt->close();
+$conn->close();
+
+$resJson = json_encode($resDict);
+echo $resJson;
 ?>
