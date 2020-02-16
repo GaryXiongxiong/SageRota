@@ -10,14 +10,14 @@ if(!$conn) {
 	echo "Connection error" . mysqli_connect_error();
 }
 
+$name = $_REQUEST['first_name'];
+$email = $_REQUEST['e_mail'];
+
 // sql query to be sent to database
 $sql = "SELECT * FROM staff WHERE first_name = ? AND e_mail = ?";
 
 // prepare statement
 $stmt = $conn->prepare($sql);
-
-$name = $_REQUEST['first_name'];
-$email = $_REQUEST['e_mail'];
 
 // bind statement
 $stmt->bind_param('ss', $name, $email);
@@ -28,10 +28,17 @@ $stmt->execute();
 // fetch results of query and store it as an associative array
 $result = $stmt->get_result()->fetch_all();
 
+// initiate array to be returned
+$staff = array();
+
 if (count($result) != 0) {
 	$flag = "fail";
-	$staff = array();
 } else {
+	$surname = $_REQUEST['last_name'];
+	$phone = $_REQUEST['phone_number'];
+	$title = $_REQUEST['job_title'];
+	$gender = $_REQUEST['gender'];
+	$status = $_REQUEST['status'];
 
 	// sql query to insert values
 	$sql_in = "INSERT INTO staff(first_name, last_name, phone_number, e_mail, job_title, gender, status) 
@@ -39,12 +46,6 @@ if (count($result) != 0) {
 
 	// prepare statement
 	$stmt_in = $conn->prepare($sql_in);
-
-	$surname = $_REQUEST['last_name'];
-	$phone = $_REQUEST['phone_number'];
-	$title = $_REQUEST['job_title'];
-	$gender = $_REQUEST['gender'];
-	$status = $_REQUEST['status'];
 
 	// bind statement
 	$stmt_in->bind_param('sssssii', $name, $surname, $phone, $email, $title, $gender, $status);
@@ -80,18 +81,17 @@ if (count($result) != 0) {
 	} else {
 		$flag = "fail";
 	}
-
-	$staffs = array($staff);
-	$resDict = array(
-		"result" => $flag,
-		"staff" => $staffs
-	);
-
-	// close statements and connection to db
-	$stmt->close();
-	$stmt_in->close();
-	$conn->close();
 }
+
+$staffs = array($staff);
+$resDict = array(
+	"result" => $flag,
+	"staff" => $staffs
+);
+
+// close statements and connection to db
+$stmt->close();
+$conn->close();
 
 $resJson = json_encode($resDict);
 echo $resJson;
