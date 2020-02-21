@@ -5,8 +5,8 @@ $conninfo = json_decode($datainfo);
 $conn = new mysqli($conninfo->{"host"},$conninfo->{"user"},$conninfo->{"password"},$conninfo->{"dbname"},$conninfo->{"port"});
 $page = $_REQUEST['page'];
 $startRow=10*($page-1);
-//every page shows 10 rows of information
-$query = $conn->prepare("SELECT * FROM staff order by sid asc limit ?,10");
+//every page shows 12 rows of information
+$query = $conn->prepare("SELECT * FROM staff order by sid asc limit ?,12");
 $query->bind_param("i",$startRow);
 $query->execute();
 $result = $query->get_result()->fetch_all();
