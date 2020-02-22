@@ -6,17 +6,17 @@ $conn = new mysqli($conninfo->{"host"}, $conninfo->{"user"}, $conninfo->{"passwo
 $start_date = $_REQUEST['start_date'];
 /**
  * get the start and end date of the week which contains the input date
- * @param string $gdate  format：YYYY-MM-DD
+ * @param string $inputDate  format：YYYY-MM-DD
  * @param int $weekStart   the day that as the begin of a week,0 is Sunday,1 is Monday,etc.
  * @return array array( "startDate ",  "endDate");
  */
-function getAWeekTimeSlot($gdate, $weekStart = 0) {
-    if (! $gdate){
-        $gdate = date ( "Y-m-d" );
+function getAWeekTimeSlot($inputDate, $weekStart = 0) {
+    if (! $inputDate){
+        $inputDate = date ( "Y-m-d" );
     }
-    $w = date ( "w", strtotime ( $gdate ) ); //get the day in order,0 is Sunday,1 is Monday,etc.
+    $w = date ( "w", strtotime ( $inputDate ) ); //get the day in order,0 is Sunday,1 is Monday,etc.
     $dn = $w ? $w - $weekStart : 6; //days that should be minus
-    $st = date ( "Y-m-d", strtotime ( "$gdate  - " . $dn . "  days " ) );
+    $st = date ( "Y-m-d", strtotime ( "$inputDate  - " . $dn . "  days " ) );
     $en = date ( "Y-m-d", strtotime ( "$st  +6  days " ) );
     return array ($st, $en ); //return start date and end date of the week
 }
