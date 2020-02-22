@@ -12,8 +12,8 @@
     $gender = $_REQUEST['gender'];
     $status = $_REQUEST['status'];
 
-    $query = $conn->prepare("SELECT * FROM staff where sid=? and first_name=?");
-    $query->bind_param("is", $sid, $fname);
+    $query = $conn->prepare("SELECT * FROM staff where sid=?");
+    $query->bind_param("i", $sid);
     $query->execute();
     $result = $query->get_result()->fetch_all();
     if (count($result) == 0) {
