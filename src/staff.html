@@ -27,7 +27,8 @@
                 <a class="nav-link active" href="staff.html">Staff</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="timetable.html">Timetable</a>
+<!--                TODO: Link to finished Timetable page-->
+                <a class="nav-link" href="#">Timetable</a>
             </li>
         </ul>
     </div>
@@ -67,18 +68,18 @@
             <!--    </div>-->
         </div>
         <!--Pagination start-->
-        <!--TODO: Finish paging-->
         <div class="row justify-content-end pagination-row">
             <ul class="pagination" id="pagination">
                 <li class="page-item"><a class="page-link" href="#" id="previous-page">Previous</a></li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
+<!--                <li class="page-item active"><a class="page-link" href="#">1</a></li>-->
+<!--                <li class="page-item"><a class="page-link" href="#">2</a></li>-->
                 <li class="page-item"><a class="page-link" href="#" id="next-page">Next</a></li>
             </ul>
         </div>
         <!--Pagination end-->
     </div>
 </div>
+<!--Page content end-->
 
 <!-- The adding popup -->
 <div class="modal fade" id="add-staff-popup">
@@ -179,7 +180,7 @@
             <!-- popup body -->
             <div class="modal-body">
                 <form id="edit-staff-form" action="" method="post" onsubmit="return false">
-                    <input type="text" class="form-control hide-input" placeholder="sid" id="sid" name="sid">
+                    <label for="sid" class="hide-input"></label><input type="text" class="form-control hide-input" placeholder="sid" id="sid" name="sid">
                     <div class="form-group">
                         <label for="edit_first_name">First name:</label>
                         <input type="text" class="form-control" placeholder="First name" id="edit_first_name"
@@ -230,6 +231,16 @@
     </div>
 </div>
 <!--Edit popup end-->
+
+<div class="modal fade bd-example-modal-sm" role="dialog" id="loading-popup">
+    <div class="modal-dialog modal-sm">
+        <button class="btn btn-primary loading" type="button" disabled>
+            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+            Loading...
+        </button>
+    </div>
+</div>
+
 <script>
 </script>
 </body>
