@@ -32,6 +32,7 @@ $(document).ready(function () {
                         "</button> " +
                         "</div>");
                     loadContent(page);
+                    loadPages();
                 } else if (result.result === "fail") {
                     $("#add-staff-popup").modal("hide");
                     $("#add-staff-form")[0].reset();
@@ -93,9 +94,9 @@ $(document).ready(function () {
 });
 
 function loadPages() {
-    $("#pagination").innerHTML =
-        "<li class='page-item'><a class='page-link' href='#' id='previous-page'>Previous</a></li>\n" +
-        "<li class='page-item'><a class='page-link' href='#' id='next-page'>Next</a></li>";
+    $("#pagination").html("<li class='page-item'><a class='page-link' href='#' id='previous-page'>Previous</a></li>\n" +
+        "<li class='page-item'><a class='page-link' href='#' id='next-page'>Next</a></li>");
+
     $.ajax({
         url: "api/staff_list_count.php",
         method: "POST",
@@ -217,13 +218,15 @@ function bindDeleteEvent() {
                         "<span aria-hidden='true'>&times;</span> " +
                         "</button> " +
                         "</div>");
+                },
+                complete: function () {
+                    //unbind the delete action after deleting
+                    $("#delete-staff-popup #confirm-delete").unbind();
+                    $("#delete-staff-popup").modal("hide");
+                    loadContent();
+                    loadPages();
                 }
             });
-            //unbind the delete action after deleting
-            $("#delete-staff-popup #confirm-delete").unbind();
-            $("#delete-staff-popup").modal("hide");
-            loadContent();
-            loadPages();
         });
         $("#delete-staff-popup #cancel-delete").click(function () {
             //unbind the delete action after canceling
