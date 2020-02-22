@@ -133,12 +133,14 @@ function loadContent(page) {
         if (page == null) page = 1;
     }
     $(".staff-info").remove();
-    showLoading();
     $.ajax({
         url: "api/staff_list.php",
         method: "POST",
         dataType: "json",
         data: {page: page},
+        beforeSend: function(){
+          showLoading();
+        },
         success(result) {
             let staffs = result.staff;
             if (staffs != null) {
