@@ -203,7 +203,7 @@ function bindDeleteEvent() {
                             "</div>");
                     } else if (result.result === "fail") {
                         $(".main_title").after("<div class='alert alert-danger alert-dismissible fade show' role='alert'>" +
-                            "  <strong>Delete Fail! Please check if the staff is exist</strong>" +
+                            "  <strong>Delete Fail! Please check if the staff is assign to a shift.</strong>" +
                             "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
                             "<span aria-hidden='true'>&times;</span> " +
                             "</button> " +
