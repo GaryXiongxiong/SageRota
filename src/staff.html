@@ -12,8 +12,6 @@
     <script type="module" src="js/utils.js"></script>
 </head>
 <body>
-
-
 <!--Navigate bar-->
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark navigation">
     <a class="navbar-brand" href="staff.html">SAGE</a>
@@ -27,7 +25,7 @@
                 <a class="nav-link active" href="staff.html">Staff</a>
             </li>
             <li class="nav-item">
-<!--                TODO: Link to finished Timetable page-->
+                <!--                TODO: Link to finished Timetable page-->
                 <a class="nav-link" href="#">Timetable</a>
             </li>
         </ul>
@@ -71,8 +69,8 @@
         <div class="row justify-content-end pagination-row">
             <ul class="pagination" id="pagination">
                 <li class="page-item"><a class="page-link" href="#" id="previous-page">Previous</a></li>
-<!--                <li class="page-item active"><a class="page-link" href="#">1</a></li>-->
-<!--                <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+                <!--                <li class="page-item active"><a class="page-link" href="#">1</a></li>-->
+                <!--                <li class="page-item"><a class="page-link" href="#">2</a></li>-->
                 <li class="page-item"><a class="page-link" href="#" id="next-page">Next</a></li>
             </ul>
         </div>
@@ -158,8 +156,14 @@
                 <p>You are going to remove staff from this list permanently. Do you confirm?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="confirm-delete">Yes, Delete</button>
-                <button type="button" class="btn btn-primary" id="cancel-delete" data-dismiss="modal">Cancel</button>
+                <form id="delete-staff-form" action="" method="post" onsubmit="return false">
+                    <label for="delete_sid" class="hide-input"></label><input type="text" class="hide-input"
+                                                                              placeholder="sid" id="delete_sid" name="sid">
+                    <label for="delete_name" class="hide-input"></label><input type="text" class="hide-input"
+                                                                               placeholder="name" id="delete_name" name="name">
+                    <button type="submit" class="btn btn-danger" id="confirm-delete">Yes, Delete</button>
+                    <button type="button" class="btn btn-primary" id="cancel-delete" data-dismiss="modal">Cancel</button>
+                </form>
             </div>
         </div>
     </div>
@@ -180,7 +184,8 @@
             <!-- popup body -->
             <div class="modal-body">
                 <form id="edit-staff-form" action="" method="post" onsubmit="return false">
-                    <label for="sid" class="hide-input"></label><input type="text" class="form-control hide-input" placeholder="sid" id="sid" name="sid">
+                    <label for="edit_sid" class="hide-input"></label><input type="text" class="hide-input"
+                                                                            placeholder="sid" id="edit_sid" name="sid">
                     <div class="form-group">
                         <label for="edit_first_name">First name:</label>
                         <input type="text" class="form-control" placeholder="First name" id="edit_first_name"
