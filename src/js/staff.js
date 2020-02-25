@@ -212,7 +212,7 @@ function appendStaff(staff) {
         "                            " + staff.job_title +
         "                        </p>" +
         "                        <span class='btn btn-primary btn-staff-edit'>Edit</span>" +
-        "                        <span class='btn btn-danger btn-staff-delete'>Delete</span>" +
+        "                        <span class='btn btn-secondary btn-staff-delete'>Delete</span>" +
         "                    </div>" +
         "                </div>" +
         "            </div>";
