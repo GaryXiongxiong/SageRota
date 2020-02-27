@@ -12,4 +12,3 @@ function showLoading() {
 function removeLoading() {
     $("#loading-popup").modal("hide");
 }
-export {getUrlParam,showLoading,removeLoading};

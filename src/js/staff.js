@@ -1,5 +1,3 @@
-import {getUrlParam, showLoading, removeLoading} from './utils.js';
-
 $(document).ready(function () {
 
     //Get page number from url
@@ -140,7 +138,7 @@ function loadPages() {
         url: "api/staff_list_count.php",
         method: "POST",
         dataType: "json",
-        success(result) {
+        success:function (result){
             let pages = result.pageCount;
             let page = parseInt(getUrlParam("p"));
             if (isNaN(page)) page = 1;
@@ -181,7 +179,7 @@ function loadContent(page) {
         beforeSend: function(){
           showLoading();
         },
-        success(result) {
+        success: function(result) {
             let staffs = result.staff;
             if (staffs != null) {
                 staffs.forEach(appendStaff);
@@ -252,7 +250,7 @@ function bindEditEvent() {
             dataType: "json",
             method: "POST",
             data: {sid: sid, name: first_name},
-            success(result) {
+            success: function(result) {
                 if (result.staff.length === 1) {
                     let staff = result.staff[0];
                     $("#edit-staff-form #edit_sid").val(staff.sid);
