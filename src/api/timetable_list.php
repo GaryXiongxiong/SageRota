@@ -23,7 +23,7 @@ function getAWeekTimeSlot($inputDate, $weekStart = 0) {
 
 $timeSlot1=getAWeekTimeSlot($start_date,1);//default Monday is the beginning of a week
 $weekStartDate=$timeSlot1[0];
-$end_date = date ( "Y-m-d", strtotime ( "$start_date  +70  days " ) );//default 10 weeks
+$end_date = date ( "Y-m-d", strtotime ( "$start_date  +56  days " ) );//default 9 weeks
 $timeSlot2=getAWeekTimeSlot($end_date,1);
 $weekEndDate=$timeSlot2[1];
 
