@@ -7,6 +7,21 @@
     margin-bottom: 1rem;
     margin-top: 1rem;
 }
+.shift-info{
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+.card{
+    height: 100%;
+}
+.shift-info.invalid{
+    color: #adb5bd;
+}
+
+.shift-info.invalid p{
+    visibility: hidden;
+}
+
 .navigation{
     margin-bottom: 3rem;
 }

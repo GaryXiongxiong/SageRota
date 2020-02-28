@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timetable</title>
+    <link rel="stylesheet" href="bootstrap/bootstrap_customized.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!--Navigate bar-->
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark navigation">
+    <a class="navbar-brand" href="staff.html"><img src="img/sage-logo.svg" alt="Sage Logo white on green"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav nav-justified">
+            <li class="nav-item">
+                <a class="nav-link" href="staff.html">Staff</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="timetable.html">Timetable</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!--Navigate bar end-->
+
+<div class="container" id="main-container">
+    <!--    staff List-->
+    <div class="container-fluid page-content" id="page-content">
+        <h1 class="main_title">Timetable</h1>
+        <HR>
+        <div class="row timetable-list" id="timetable-list">
+            <!--Template of staff entry in the staff list                                -->
+            <div class="col-lg-4 shift-info" data-id="1" data-date="">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>24/2 - 1/3</h5>
+                        <p>
+                            <i class="fas fa-user"></i>
+                            <strong>Yixiong Jiang</strong>
+                            <br>
+                            <i class="fas fa-phone-square-alt"></i>
+                            +44 07579859794
+                            <br>
+                            <i class="fas fa-envelope-square"></i>
+                            i@jiangyixiong.top
+                            <br>
+                            <i class="fas fa-briefcase"></i>
+                            Product Manager
+                        </p>
+                        <span class="btn btn-primary">Edit</span>
+                        <span class="btn btn-secondary btn-delete">Delete</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 shift-info invalid" data-id="" data-date="">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>24/2 - 1/3</h5>
+                        <p>
+
+                        </p>
+                        <span class="btn btn-primary">Edit</span>
+                        <span class="btn btn-secondary btn-delete">Delete</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Pagination start-->
+        <div class="row justify-content-end pagination-row">
+            <ul class="pagination" id="pagination">
+                <li class="page-item"><a class="page-link" href="#" id="previous-page">Previous</a></li>
+                <!--                <li class="page-item active"><a class="page-link" href="#">1</a></li>-->
+                <!--                <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+                <li class="page-item"><a class="page-link" href="#" id="next-page">Next</a></li>
+            </ul>
+        </div>
+        <!--Pagination end-->
+    </div>
+</div>
+<!--Page content end-->
+</body>
+<script src="https://kit.fontawesome.com/9b17a9fd41.js" crossorigin="anonymous"></script>
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="bootstrap/bootstrap.bundle.js"></script>
+<script src="js/timetable.js"></script>
+<script src="js/utils.js"></script>
+</html>
