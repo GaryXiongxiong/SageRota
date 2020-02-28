@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS `timetable`.`staff` (
   `first_name` VARCHAR(45) NOT NULL,
   `last_name` VARCHAR(45) NOT NULL,
   `phone_number` VARCHAR(20) NOT NULL,
-  `e_mail` VARCHAR(30) NOT NULL,
+  `e_mail` VARCHAR(320) NOT NULL,
   `job_title` VARCHAR(30) NOT NULL,
   `gender` tinyint(4) NOT NULL COMMENT '1:male 0:female',
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1: not working;2: at working;3:quit job',
