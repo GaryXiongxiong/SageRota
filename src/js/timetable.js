@@ -191,7 +191,7 @@ function loadContent() {
             let shifts = result.shift;
             let curDate = startDate;
             for (let i = 0; i < 9; i++) {
-                while(new Date(shifts[0].start_time).getDay()!==1) shifts.shift();
+                while(shifts.length!==0&&new Date(shifts[0].start_time).getDay()!==1) shifts.shift();
                 if (shifts.length!==0&&curDate.format("YYYY-MM-DD") === shifts[0].start_time) {
                     appendShift(shifts.shift());
                 } else {
