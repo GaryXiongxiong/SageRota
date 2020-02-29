@@ -40,7 +40,7 @@
         </div>
         <div class="row staff-list" id="staff-list">
             <!--Template of staff entry in the staff list                                -->
-            <!--    <div class="col-lg-4 staff-info" data-id="1">-->
+            <!--    <div class="col-lg-4 col-md-6 staff-info" data-id="1">-->
             <!--        <div class="card">-->
             <!--            <div class="card-body">-->
             <!--                <h5>Gary Jiang</h5>-->
@@ -54,8 +54,8 @@
             <!--                    <i class="fas fa-briefcase"></i>-->
             <!--                    Product Manager-->
             <!--                </p>-->
-            <!--                <span class="btn btn-primary">Edit</span>-->
-            <!--                <span class="btn btn-secondary btn-delete">Delete</span>-->
+            <!--                <span class="btn btn-primary btn-staff-edit">Edit</span>-->
+            <!--                <span class="btn btn-secondary btn-staff-delete">Delete</span>-->
             <!--            </div>-->
             <!--        </div>-->
             <!--    </div>-->
@@ -153,11 +153,14 @@
             <div class="modal-footer">
                 <form id="delete-staff-form" action="" method="post" onsubmit="return false">
                     <label for="delete_sid" class="hide-input"></label><input type="text" class="hide-input"
-                                                                              placeholder="sid" id="delete_sid" name="sid">
+                                                                              placeholder="sid" id="delete_sid"
+                                                                              name="sid">
                     <label for="delete_name" class="hide-input"></label><input type="text" class="hide-input"
-                                                                               placeholder="name" id="delete_name" name="name">
+                                                                               placeholder="name" id="delete_name"
+                                                                               name="name">
                     <button type="submit" class="btn btn-danger" id="confirm-delete">Yes, Delete</button>
-                    <button type="button" class="btn btn-primary" id="cancel-delete" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="cancel-delete" data-dismiss="modal">Cancel
+                    </button>
                 </form>
             </div>
         </div>
@@ -179,8 +182,8 @@
             <!-- popup body -->
             <div class="modal-body">
                 <form id="edit-staff-form" action="" method="post" onsubmit="return false">
-                    <label for="edit_sid" class="hide-input"></label><input type="text" class="hide-input"
-                                                                            placeholder="sid" id="edit_sid" name="sid">
+                    <label for="edit_sid" class="hide-input"></label>
+                    <input type="text" class="hide-input" placeholder="sid" id="edit_sid" name="sid">
                     <div class="form-group">
                         <label for="edit_first_name">First name:</label>
                         <input type="text" class="form-control" placeholder="First name" id="edit_first_name"
@@ -242,7 +245,7 @@
 </div>
 </body>
 <script src="https://kit.fontawesome.com/9b17a9fd41.js" crossorigin="anonymous"></script>
-<script src="js/jquery-3.4.1.min.js"></script>
+<script src="lib/jquery-3.4.1.min.js"></script>
 <script src="bootstrap/bootstrap.bundle.js"></script>
 <script src="js/staff.js"></script>
 <script src="js/utils.js"></script>

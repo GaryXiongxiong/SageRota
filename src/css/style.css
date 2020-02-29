@@ -4,12 +4,12 @@
     padding-top: 1rem;
 }
 .staff-info{
-    margin-bottom: 1rem;
-    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
 }
 .shift-info{
-    margin-bottom: 1rem;
-    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
 }
 .card{
     height: 100%;
@@ -19,7 +19,6 @@
 }
 
 .shift-info.invalid p{
-    visibility: hidden;
 }
 
 .navigation{

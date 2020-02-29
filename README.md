@@ -15,3 +15,11 @@ https://documenter.getpostman.com/view/9762982/SWTHbb5q?version=latest
 - Database named timetable
 - Login information in data.json
 - Use CreateTable.sql to create tables
+
+## References
+
+- jQuery
+- Bootstrap
+- JQuery.datepicker https://github.com/gregzhang616/jquery-datepicker
+- js-date-format https://github.com/UziTech/js-date-format
+- bootstrap-select https://github.com/snapappointments/bootstrap-select/
