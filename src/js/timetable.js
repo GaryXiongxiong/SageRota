@@ -168,7 +168,7 @@ function loadPages() {
 
 function loadGoto(){
     $(".datepicker").datepicker({
-        defaultValue: loadStartDate(),
+        defaultValue: getUrlParam("start_date"),
         weekStart: 1
     });
     $("#goto-btn").click(function(){
