@@ -38,3 +38,8 @@
 .loading{
     width: 100%;
 }
+.current-shift{
+    border-style: solid;
+    border-color: green;
+    border-width: 3px;
+}

@@ -55,10 +55,10 @@ $(document).ready(function () {
         $.ajax({
             url: "api/delete_shift.php",
             method: "POST",
-            dataType:"json",
+            dataType: "json",
             data: submitData,
             success: function (result) {
-                if(result.result==="success"){
+                if (result.result === "success") {
                     $("#delete-shift-popup").modal("hide");
                     $("#delete-shift-form")[0].reset();
                     $(".main_title").after("<div class='alert alert-success alert-dismissible fade show' role='alert'>" +
@@ -68,8 +68,7 @@ $(document).ready(function () {
                         "</button> " +
                         "</div>");
                     loadContent();
-                }
-                else{
+                } else {
                     $("#delete-shift-popup").modal("hide");
                     $("#delete-shift-form")[0].reset();
                     $(".main_title").after("<div class='alert alert-danger alert-dismissible fade show' role='alert'>" +
@@ -147,7 +146,7 @@ function loadStartDate() {
     let dayOfWeek;
     if (startDate == null) {
         date = new Date();
-    }else{
+    } else {
         date = new Date(startDate);
     }
     dayOfWeek = date.getDay();
@@ -160,19 +159,19 @@ function loadPages() {
     let startDate = loadStartDate();
     let previousDate = new Date(startDate);
     let nextDate = new Date(startDate);
-    previousDate.setDate(startDate.getDate()-63);
-    nextDate.setDate(startDate.getDate()+63);
-    $("#previous-page").attr("href","?start_date="+previousDate.format("YYYY-MM-DD"));
-    $("#next-page").attr("href","?start_date="+nextDate.format("YYYY-MM-DD"));
+    previousDate.setDate(startDate.getDate() - 63);
+    nextDate.setDate(startDate.getDate() + 63);
+    $("#previous-page").attr("href", "?start_date=" + previousDate.format("YYYY-MM-DD"));
+    $("#next-page").attr("href", "?start_date=" + nextDate.format("YYYY-MM-DD"));
 }
 
-function loadGoto(){
+function loadGoto() {
     $(".datepicker").datepicker({
         defaultValue: getUrlParam("start_date"),
         weekStart: 1
     });
-    $("#goto-btn").click(function(){
-        window.location.href='?start_date='+$(".datepicker").datepicker('getDate');
+    $("#goto-btn").click(function () {
+        window.location.href = '?start_date=' + $(".datepicker").datepicker('getDate');
     })
 }
 
@@ -184,21 +183,22 @@ function loadContent() {
         method: "POST",
         dataType: "json",
         data: {start_date: startDate.format("YYYY-MM-DD")},
-        beforeSend: function(){
+        beforeSend: function () {
             showLoading();
         },
         success: function (result) {
             let shifts = result.shift;
             let curDate = startDate;
             for (let i = 0; i < 9; i++) {
-                while(shifts.length!==0&&new Date(shifts[0].start_time).getDay()!==1) shifts.shift();
-                if (shifts.length!==0&&curDate.format("YYYY-MM-DD") === shifts[0].start_time) {
+                while (shifts.length !== 0 && new Date(shifts[0].start_time).getDay() !== 1) shifts.shift();
+                if (shifts.length !== 0 && curDate.format("YYYY-MM-DD") === shifts[0].start_time) {
                     appendShift(shifts.shift());
                 } else {
                     appendEmptyShift(curDate);
                 }
                 curDate.setDate(curDate.getDate() + 7);
             }
+            loadCurrentShiftStyle();
             bindAssignEvent();
             bindDeleteEvent();
             bindEditEvent();
@@ -209,15 +209,15 @@ function loadContent() {
 
 function appendShift(shift) {
     let shiftContent;
-    if(shift.location==null||shift.location===""){
-        shiftContent = '<div class="col-lg-4 col-md-6 shift-info" data-id="'+shift.id+'" data-date="'+shift.start_time+'">\n' +
+    if (shift.location == null || shift.location === "") {
+        shiftContent = '<div class="col-lg-4 col-md-6 shift-info" data-id="' + shift.id + '" data-date="' + shift.start_time + '">\n' +
             '                <div class="card">\n' +
             '                    <div class="card-body">\n' +
-            '                        <h5>'+new Date(shift.start_time).format("DS MMM")+" - "
-            +' '+ new Date(shift.end_time).format("DS MMM") +'</h5>\n' +
+            '                        <h5>' + new Date(shift.start_time).format("DS MMM") + " - "
+            + ' ' + new Date(shift.end_time).format("DS MMM") + '</h5>\n' +
             '                        <p>\n' +
             '                            <i class="fas fa-user"></i>\n' +
-            '                            <strong>'+shift.staff_first_name+' '+shift.staff_last_name+'</strong>\n' +
+            '                            <strong>' + shift.staff_first_name + ' ' + shift.staff_last_name + '</strong>\n' +
             '                            <br>\n' +
             '                            <br>\n' +
             '                        </p>\n' +
@@ -226,18 +226,18 @@ function appendShift(shift) {
             '                    </div>\n' +
             '                </div>\n' +
             '            </div>';
-    }else{
-        shiftContent = '<div class="col-lg-4 col-md-6 shift-info" data-id="'+shift.id+'" data-date="'+shift.start_time+'">\n' +
+    } else {
+        shiftContent = '<div class="col-lg-4 col-md-6 shift-info" data-id="' + shift.id + '" data-date="' + shift.start_time + '">\n' +
             '                <div class="card">\n' +
             '                    <div class="card-body">\n' +
-            '                        <h5>'+new Date(shift.start_time).format("DS MMM")+" - "
-            +' '+ new Date(shift.end_time).format("DS MMM") +'</h5>\n' +
+            '                        <h5>' + new Date(shift.start_time).format("DS MMM") + " - "
+            + ' ' + new Date(shift.end_time).format("DS MMM") + '</h5>\n' +
             '                        <p>\n' +
             '                            <i class="fas fa-user"></i>\n' +
-            '                            <strong>'+shift.staff_first_name+' '+shift.staff_last_name+'</strong>\n' +
+            '                            <strong>' + shift.staff_first_name + ' ' + shift.staff_last_name + '</strong>\n' +
             '                            <br>\n' +
             '                            <i class="fas fa-map-marked-alt"></i>\n' +
-            '                            '+shift.location+'\n' +
+            '                            ' + shift.location + '\n' +
             '                            <br>\n' +
             '                        </p>\n' +
             '                        <span class="btn btn-primary btn-shift-edit">Edit</span>\n' +
@@ -251,11 +251,11 @@ function appendShift(shift) {
 
 function appendEmptyShift(date) {
     let endDate = new Date(date);
-    endDate.setDate(date.getDate()+6);
-    let shiftContent = '<div class="col-lg-4 col-md-6 shift-info invalid" data-id="" data-date="'+date.format("YYYY-MM-DD")+'">\n' +
+    endDate.setDate(date.getDate() + 6);
+    let shiftContent = '<div class="col-lg-4 col-md-6 shift-info invalid" data-id="" data-date="' + date.format("YYYY-MM-DD") + '">\n' +
         '                <div class="card">\n' +
         '                    <div class="card-body">\n' +
-        '                        <h5>'+date.format("DS MMM")+' - '+endDate.format("DS MMM")+'</h5>\n' +
+        '                        <h5>' + date.format("DS MMM") + ' - ' + endDate.format("DS MMM") + '</h5>\n' +
         '                        <p>\n' +
         '                            <i class="fas fa-user"></i>\n' +
         '                            <strong>Unassigned</strong>\n' +
@@ -273,14 +273,14 @@ function bindAssignEvent() {
     $(".btn-shift-assign").click(function () {
         let startDate = $(this).parents(".shift-info").attr("data-date");
         let endDateDate = new Date(startDate);
-        endDateDate.setDate(endDateDate.getDate()+6);
+        endDateDate.setDate(endDateDate.getDate() + 6);
         let endDate = new Date(endDateDate).format("YYYY-MM-DD");
         $("#assign-shift-popup").modal("show");
         $("#assign-shift-form #start_date").val(startDate);
         $("#assign-shift-form #end_date").val(endDate);
         $.ajax({
             url: "api/staff_list.php",
-            data: {page:"all"},
+            data: {page: "all"},
             method: "POST",
             dataType: "json",
             success: function (result) {
@@ -288,7 +288,7 @@ function bindAssignEvent() {
                 let staffs = result.staff;
                 staffs.forEach(function (staff) {
                     $("#assign-shift-form #staff_sid").append(
-                        '<option value="'+staff.sid+'" class="staff-entry">'+staff.first_name+' '+staff.last_name+'</option>'
+                        '<option value="' + staff.sid + '" class="staff-entry">' + staff.first_name + ' ' + staff.last_name + '</option>'
                     )
                 });
                 $('#assign-shift-popup .selectpicker').selectpicker("refresh");
@@ -320,7 +320,7 @@ function bindEditEvent() {
         $("#edit-shift-popup").modal("show");
         $.ajax({
             url: "api/staff_list.php",
-            data: {page:"all"},
+            data: {page: "all"},
             method: "POST",
             dataType: "json",
             success: function (result) {
@@ -328,7 +328,7 @@ function bindEditEvent() {
                 let staffs = result.staff;
                 staffs.forEach(function (staff) {
                     $("#edit-shift-form #edit_staff_sid").append(
-                        '<option value="'+staff.sid+'" class="staff-entry">'+staff.first_name+' '+staff.last_name+'</option>'
+                        '<option value="' + staff.sid + '" class="staff-entry">' + staff.first_name + ' ' + staff.last_name + '</option>'
                     )
                 });
 
@@ -336,9 +336,9 @@ function bindEditEvent() {
                     url: "api/shift_info.php",
                     method: "POST",
                     dataType: "json",
-                    data: {id:id,start_date:startDate},
+                    data: {id: id, start_date: startDate},
                     success: function (result) {
-                        if(result.shift.length===1){
+                        if (result.shift.length === 1) {
                             let shift = result.shift[0];
                             $("#edit-shift-form #edit_id").val(shift.id);
                             $("#edit-shift-form #edit_start_date").val(shift.start_time);
@@ -347,7 +347,7 @@ function bindEditEvent() {
                             $("#edit-shift-form #edit_remark").val(shift.remark);
                             $("#edit-shift-form #edit_staff_sid").val(shift.staff_sid);
                             $("#edit-shift-form .selectpicker").selectpicker("refresh");
-                        }else{
+                        } else {
                             console.log("fail");
                         }
                     },
@@ -364,3 +364,11 @@ function bindEditEvent() {
     })
 }
 
+function loadCurrentShiftStyle() {
+    let date = new Date();
+    let dayOfWeek = date.getDay();
+    if (dayOfWeek === 0) dayOfWeek = 7;
+    date.setDate(date.getDate() - dayOfWeek + 1);
+    let dateStr = date.format("YYYY-MM-DD");
+    $("[data-date=" + dateStr +"]").children(".card").addClass("current-shift");
+}
