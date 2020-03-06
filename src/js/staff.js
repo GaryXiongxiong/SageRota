@@ -138,28 +138,28 @@ function loadPages() {
         url: "api/staff_list_count.php",
         method: "POST",
         dataType: "json",
-        success:function (result){
+        success: function (result) {
             let pages = result.pageCount;
             let page = parseInt(getUrlParam("p"));
             if (isNaN(page)) page = 1;
             for (let i = 1; i <= pages; i++) {
                 let item = document.createElement("li");
-                item.setAttribute("class","page-item");
-                if(i===page){
+                item.setAttribute("class", "page-item");
+                if (i === page) {
                     $(item).addClass("active");
                 }
-                item.innerHTML="<a class='page-link' href='?p=" + i + "'>" + i + "</a>";
+                item.innerHTML = "<a class='page-link' href='?p=" + i + "'>" + i + "</a>";
                 $("#pagination #next-page").parent(".page-item").before(item);
             }
-            if(page===1){
+            if (page === 1) {
                 $("#pagination #previous-page").parent(".page-item").addClass("disabled");
-            }else{
-                $("#pagination #previous-page").attr("href","?p="+(page-1));
+            } else {
+                $("#pagination #previous-page").attr("href", "?p=" + (page - 1));
             }
-            if(page===pages){
+            if (page === pages) {
                 $("#pagination #next-page").parent(".page-item").addClass("disabled");
-            }else{
-                $("#pagination #next-page").attr("href","?p="+(page+1));
+            } else {
+                $("#pagination #next-page").attr("href", "?p=" + (page + 1));
             }
         }
     })
@@ -176,10 +176,10 @@ function loadContent(page) {
         method: "POST",
         dataType: "json",
         data: {page: page},
-        beforeSend: function(){
-          showLoading();
+        beforeSend: function () {
+            showLoading();
         },
-        success: function(result) {
+        success: function (result) {
             let staffs = result.staff;
             if (staffs != null) {
                 staffs.forEach(appendStaff);
@@ -195,7 +195,7 @@ function loadContent(page) {
 
 function appendStaff(staff) {
     let staffContent =
-        "<div class='col-lg-4 staff-info' data-id='" + staff.sid + "' data-name='" + staff.first_name + "'>" +
+        "<div class='col-lg-4 col-md-6 staff-info' data-id='" + staff.sid + "' data-name='" + staff.first_name + "'>" +
         "                <div class='card'>" +
         "                    <div class='card-body'>" +
         "                        <h5>" + staff.first_name + " " + staff.last_name + "</h5>" +
@@ -208,6 +208,7 @@ function appendStaff(staff) {
         "                            <br>" +
         "                            <i class='fas fa-briefcase'></i>" +
         "                            " + staff.job_title +
+        "                            <br>" +
         "                        </p>" +
         "                        <span class='btn btn-primary btn-staff-edit'>Edit</span>" +
         "                        <span class='btn btn-secondary btn-staff-delete'>Delete</span>" +
@@ -224,11 +225,9 @@ function bindDeleteEvent() {
         //bind delete popup
         $("#delete-staff-popup").modal("show");
         //bind confirm delete to send request
-        $("#delete-staff-popup #confirm-delete").click(function () {
             //console.log("delete:"+sid+","+first_name);
-            $("#delete-staff-form #delete_sid").val(sid);
-            $("#delete-staff-form #delete_name").val(first_name);
-        });
+        $("#delete-staff-form #delete_sid").val(sid);
+        $("#delete-staff-form #delete_name").val(first_name);
         $("#delete-staff-popup #cancel-delete").click(function () {
             //unbind the delete action after canceling
             $("#delete-staff-popup #delete-staff-form")[0].reset();
@@ -250,7 +249,7 @@ function bindEditEvent() {
             dataType: "json",
             method: "POST",
             data: {sid: sid, name: first_name},
-            success: function(result) {
+            success: function (result) {
                 if (result.staff.length === 1) {
                     let staff = result.staff[0];
                     $("#edit-staff-form #edit_sid").val(staff.sid);

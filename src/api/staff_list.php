@@ -4,10 +4,15 @@ $datainfo = file_get_contents("data.json");
 $conninfo = json_decode($datainfo);
 $conn = new mysqli($conninfo->{"host"},$conninfo->{"user"},$conninfo->{"password"},$conninfo->{"dbname"},$conninfo->{"port"});
 $page = $_REQUEST['page'];
-$startRow=9*($page-1);
-//every page shows 9 rows of information
-$query = $conn->prepare("SELECT * FROM staff order by sid asc limit ?,9");
-$query->bind_param("i",$startRow);
+if($page=="all"){
+    $query = $conn->prepare("SELECT * FROM staff");
+}
+else{
+    $startRow=9*($page-1);
+    //every page shows 9 rows of information
+    $query = $conn->prepare("SELECT * FROM staff order by sid asc limit ?,9");
+    $query->bind_param("i",$startRow);
+}
 $query->execute();
 $result = $query->get_result()->fetch_all();
 $query->close();
