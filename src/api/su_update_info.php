@@ -1,5 +1,10 @@
 <?php
 session_start();
+//    This part is used to control unauthenticated request, uncomment these before deploy
+//    if(!(isset($_SESSION['suid'])&&isset($_SESSION['level'])&&$_SESSION['level']==1)){
+//        return;
+//    }
+session_start();
 header("Content-Type:Application/json;charset=utf-8");
 $datainfo = file_get_contents("data.json");
 $conninfo = json_decode($datainfo);
@@ -10,11 +15,11 @@ $firstName = $_REQUEST['first_name'];
 $lastName = $_REQUEST['last_name'];
 $eMail = $_REQUEST['e_mail'];
 $query = $conn->prepare("UPDATE supervisor SET e_mail=?,first_name=?,last_name=? where SuId=? and level=?");
-$query->bind_param("sssii", $eMail, $firstName, $lastName,$suId,$level);
-$flag="fail";
-if($query->execute()){
-    $flag="success";
-    $_SESSION['name']=$firstName;
+$query->bind_param("sssii", $eMail, $firstName, $lastName, $suId, $level);
+$flag = "fail";
+if ($query->execute()) {
+    $flag = "success";
+    $_SESSION['name'] = $firstName;
 }
 $query->close();
 $conn->close();
