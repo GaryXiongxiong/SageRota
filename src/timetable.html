@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Timetable</title>
+    <title>Timetable Manage</title>
     <link rel="stylesheet" href="bootstrap/bootstrap_customized.css">
     <link rel="stylesheet" href="lib/jquery.datepicker.min.css">
     <link rel="stylesheet" href="lib/bootstrap-select.min.css">
@@ -11,23 +11,7 @@
 </head>
 <body>
 <!--Navigate bar-->
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark navigation">
-    <a class="navbar-brand" href="staff.html"><img src="img/sage-logo.svg" alt="Sage Logo white on green"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbar">
-        <ul class="navbar-nav nav-justified">
-            <li class="nav-item">
-                <a class="nav-link" href="staff.html">Staff</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" href="timetable.html">Timetable</a>
-            </li>
-        </ul>
-    </div>
-</nav>
+<navigation></navigation>
 <!--Navigate bar end-->
 <!--Page content start-->
 <div class="container" id="main-container">
@@ -131,7 +115,7 @@
                         <select class="form-control staff-selection selectpicker" data-live-search="true" data-size="5"
                                 data-style="btn-outline-primary" data-dropup-auto="false"
                                 data-live-search-placeholder="Search" id="staff_sid"
-                                name="staff_sid">
+                                name="staff_sid" required>
                             <!--                            <option value="sid" class="staff-entry">Name</option>-->
                         </select>
                     </div>
@@ -217,7 +201,7 @@
                         <label for="edit_staff_sid">Staff:</label>
                         <select class="form-control staff-selection selectpicker" data-live-search="true" data-size="5"
                                 data-style="btn-outline-primary" data-dropup-auto="false"
-                                data-live-search-placeholder="Search" id="edit_staff_sid" name="staff_sid">
+                                data-live-search-placeholder="Search" id="edit_staff_sid" name="staff_sid" required>
                             <!--<option value="sid" class="staff-entry">Name</option>-->
                         </select>
                     </div>
@@ -249,6 +233,7 @@
 <script src="bootstrap/bootstrap.bundle.js"></script>
 <script src="lib/js-date-format.min.js"></script>
 <script src="lib/jquery.datepicker.min.js"></script>
+<script src="lib/jquery.cookie.js"></script>
 <script src="lib/bootstrap-select.min.js"></script>
 <script src="js/timetable.js"></script>
 <script src="js/utils.js"></script>

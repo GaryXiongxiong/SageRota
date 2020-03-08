@@ -1,4 +1,12 @@
 $(document).ready(function () {
+    let auth = suAuthenticate();
+    if(auth.level!==1){
+        window.location.href="su_login.html";
+    }
+
+
+    loadNav(1,auth);
+
     loadContent();
     loadPages();
     loadGoto();
