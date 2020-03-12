@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supervisor profile</title>
+    <link rel="stylesheet" href="bootstrap/bootstrap_customized.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<navigation></navigation>
+<div class="container">
+    <h1 id="name" class="main_title">User Name</h1>
+    <hr>
+    <span class="btn btn-primary header-buttons" id="edit_name">Edit Name</span>
+    <div class="row my-10">
+        <div class="col-lg-6 staff-info">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">E-MAIL</h3>
+                </div>
+                <div class="card-body">
+                    <p class="card-text" id="email">user@email.com</p>
+                    <span class="btn btn-primary" id="edit_e_mail">Edit E-mail</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 staff-info">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">PASSWORD</h3>
+                </div>
+                <div class="card-body">
+                    <p class="card-text" id="password">··········</p>
+                    <span class="btn btn-danger" id="reset_password">Reset Password</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit profile popup-->
+<div class="modal fade" role="dialog" id="edit-profile-popup">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Profile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-profile-form" action="" method="post" onsubmit="return false">
+                    <div class="form-group">
+                        <label for="first_name">First name:</label>
+                        <input type="text" class="form-control" placeholder="First name" id="first_name"
+                               name="first_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="last_name">Last name:</label>
+                        <input type="text" class="form-control" placeholder="Last name" id="last_name" name="last_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="e_mail">E-mail:</label>
+                        <input type="email" class="form-control" placeholder="E-mail" id="e_mail" name="e_mail" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Edit profile popup end-->
+
+<!--reset password popup-->
+<div class="modal fade" role="dialog" id="reset_pwd_popup">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Reset Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="reset_pwd_form" action="" method="post" onsubmit="return false">
+                    <div class="form-group">
+                        <label for="old_pwd">Current Password:</label>
+                        <input type="password" class="form-control" placeholder="Current Password" id="old_pwd"
+                               name="old_pwd" required>
+                        <span class="text-danger invalid-feedback" id="invalid-notice">Current password is invalid.</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="new_pwd">New Password:</label>
+                        <input type="password" class="form-control" placeholder="New Password" id="new_pwd" name="new_pwd" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cfm_pwd">Confirm New Password:</label>
+                        <input type="password" class="form-control" placeholder="Confirm New Password" id="cfm_pwd" name="cfm_pwd" required>
+                        <span class="text-danger invalid-feedback" id="unconfirmed-notice">Confirmation of new password is not same with new password.</span>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+                    <button type="button" class="btn btn-secondary" id="cancel-delete" data-dismiss="modal">Cancel
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--reset password popup end-->
+
+</body>
+<script src="https://kit.fontawesome.com/9b17a9fd41.js" crossorigin="anonymous"></script>
+<script src="lib/jquery-3.4.1.min.js"></script>
+<script src="lib/jquery.cookie.js"></script>
+<script src="bootstrap/bootstrap.bundle.js"></script>
+<script src="js/su_profile.js"></script>
+<script src="lib/sha256.min.js"></script>
+<script src="js/utils.js"></script>
+</html>

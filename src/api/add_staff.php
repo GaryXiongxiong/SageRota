@@ -1,4 +1,9 @@
 <?php
+session_start();
+//    This part is used to control unauthenticated request, uncomment these before deploy
+//    if(!(isset($_SESSION['suid'])&&isset($_SESSION['level'])&&$_SESSION['level']==1)){
+//        return;
+//    }
 header("Content-Type:Application/json;charset=utf-8");
 $datainfo = file_get_contents("data.json");
 $conninfo = json_decode($datainfo);
@@ -6,8 +11,8 @@ $conninfo = json_decode($datainfo);
 $conn = new mysqli($conninfo->{"host"}, $conninfo->{"user"}, $conninfo->{"password"}, $conninfo->{"dbname"}, $conninfo->{"port"});
 
 // check connection
-if(!$conn) {
-	echo "Connection error" . mysqli_connect_error();
+if (!$conn) {
+    echo "Connection error" . mysqli_connect_error();
 }
 
 $name = $_REQUEST['first_name'];
@@ -32,61 +37,61 @@ $result = $stmt->get_result()->fetch_all();
 $staff = array();
 
 if (count($result) != 0) {
-	$flag = "fail";
+    $flag = "fail";
 } else {
-	$surname = $_REQUEST['last_name'];
-	$phone = $_REQUEST['phone_number'];
-	$title = $_REQUEST['job_title'];
-	$gender = $_REQUEST['gender'];
-	$status = $_REQUEST['status'];
+    $surname = $_REQUEST['last_name'];
+    $phone = $_REQUEST['phone_number'];
+    $title = $_REQUEST['job_title'];
+    $gender = $_REQUEST['gender'];
+    $status = $_REQUEST['status'];
 
-	// sql query to insert values
-	$sql_in = "INSERT INTO staff(first_name, last_name, phone_number, e_mail, job_title, gender, status) 
+    // sql query to insert values
+    $sql_in = "INSERT INTO staff(first_name, last_name, phone_number, e_mail, job_title, gender, status) 
 	VALUES(?, ?, ?, ?, ?, ?, ?)";
 
-	// prepare statement
-	$stmt_in = $conn->prepare($sql_in);
+    // prepare statement
+    $stmt_in = $conn->prepare($sql_in);
 
-	// bind statement
-	$stmt_in->bind_param('sssssii', $name, $surname, $phone, $email, $title, $gender, $status);
+    // bind statement
+    $stmt_in->bind_param('sssssii', $name, $surname, $phone, $email, $title, $gender, $status);
 
-	// execute statement
-	if($stmt_in->execute()) {
-		$flag = "success";
-		//sql statement to get sid
-		$sql_sid = "SELECT sid FROM staff WHERE first_name = ? AND e_mail = ?";
-		
-		// prepare statement
-		$stmt_sid = $conn->prepare($sql_sid);
+    // execute statement
+    if ($stmt_in->execute()) {
+        $flag = "success";
+        //sql statement to get sid
+        $sql_sid = "SELECT sid FROM staff WHERE first_name = ? AND e_mail = ?";
 
-		// bind and execute statement
-		$stmt_sid->bind_param('ss', $name, $email);
-		$stmt_sid->execute();
+        // prepare statement
+        $stmt_sid = $conn->prepare($sql_sid);
 
-		// get the result of query
-		$result = $stmt_sid->get_result()->fetch_all();
+        // bind and execute statement
+        $stmt_sid->bind_param('ss', $name, $email);
+        $stmt_sid->execute();
 
-		// create a staff array to return
-		$staff = array(
-			"sid" => $result[0][0],
-			"first_name" => $name,
-			"last_name" => $surname,
-			"phone_number" => $phone,
-			"e_mail" => $email,
-			"job_title" => $title,
-			"gender" => $gender,
-			"status" => $status
-		);
+        // get the result of query
+        $result = $stmt_sid->get_result()->fetch_all();
 
-	} else {
-		$flag = "fail";
-	}
+        // create a staff array to return
+        $staff = array(
+            "sid" => $result[0][0],
+            "first_name" => $name,
+            "last_name" => $surname,
+            "phone_number" => $phone,
+            "e_mail" => $email,
+            "job_title" => $title,
+            "gender" => $gender,
+            "status" => $status
+        );
+
+    } else {
+        $flag = "fail";
+    }
 }
 
 $staffs = array($staff);
 $resDict = array(
-	"result" => $flag,
-	"staff" => $staffs
+    "result" => $flag,
+    "staff" => $staffs
 );
 
 // close statements and connection to db

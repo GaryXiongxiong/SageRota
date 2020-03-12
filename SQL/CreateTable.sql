@@ -30,3 +30,19 @@ CREATE TABLE IF NOT EXISTS `timetable`.`shift` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+-- auto-generated definition
+create table supervisor
+(
+    SuId       int auto_increment
+        primary key,
+    first_name varchar(100)  not null,
+    last_name  varchar(100)  not null,
+    e_mail     varchar(320)  not null,
+    password   varchar(250)  not null comment 'sha256',
+    level      int default 1 not null,
+    UNIQUE KEY `e_mail_UNIQUE` (`e_mail`)
+)
+ENGINE = InnoDB;
+
+

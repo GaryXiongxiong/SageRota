@@ -1,4 +1,11 @@
 $(document).ready(function () {
+    //Check the authentication of user
+    let auth = suAuthenticate();
+    if(auth.level!==1){
+        window.location.href="su_login.html";
+    }
+
+    loadNav(0,auth);
 
     //Get page number from url
     let page = getUrlParam("p");

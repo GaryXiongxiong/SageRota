@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="bootstrap/bootstrap_customized.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="row align-items-center justify-content-end login-bg">
+        <div class="col-md-6 login-col shadow-lg">
+            <div class="row align-items-center justify-content-center login-card">
+                <div class="col-lg-8">
+                    <div class="row justify-content-center logo-box">
+                        <img src="img/LOGO.png" alt="LOGO">
+                    </div>
+                    <br>
+                    <p class="text-center text-faded">Welcome back, please login into your account</p>
+                    <br>
+                    <form id="login-form" action="" method="post" onsubmit="return false">
+                        <span class="text-danger invisible" id="fail-notice">E-mail or password is incorrect.</span>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="E-mail" id="e_mail"
+                                   name="e_mail" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Password" id="pwd" name="pwd" required>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-outline-primary col-12">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://kit.fontawesome.com/9b17a9fd41.js" crossorigin="anonymous"></script>
+<script src="lib/jquery-3.4.1.min.js"></script>
+<script src="bootstrap/bootstrap.bundle.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/su_login.js"></script>
+<script src="lib/sha256.min.js"></script>
+<script>
+</script>
+</html>

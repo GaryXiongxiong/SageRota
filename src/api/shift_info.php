@@ -1,5 +1,9 @@
 <?php
-
+session_start();
+//    This part is used to control unauthenticated request, uncomment these before deploy
+//    if(!(isset($_SESSION['suid'])&&isset($_SESSION['level'])&&$_SESSION['level']==1)){
+//        return;
+//    }
 header("Content-Type:Application/json;charset=utf-8");
 $datainfo = file_get_contents("data.json");
 $conninfo = json_decode($datainfo);

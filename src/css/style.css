@@ -18,9 +18,6 @@
     color: #adb5bd;
 }
 
-.shift-info.invalid p{
-}
-
 .navigation{
     margin-bottom: 3rem;
 }
@@ -42,4 +39,24 @@
     border-style: solid;
     border-color: green;
     border-width: 3px;
+}
+.login-bg{
+    height:100vh;
+    margin-right:0;
+    margin-left:0;
+    background-size: cover;
+    background: url("../img/school-supplies-office-pens-53874.jpg") no-repeat fixed center 0;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+}
+.login-col{
+    height: 100%;
+    background: #fdfeff;
+}
+.login-card{
+    height: 100%;
+}
+.text-faded{
+    color: #a9b7c4;
 }
