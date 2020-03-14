@@ -6,6 +6,8 @@ $(document).ready(function () {
         //    Redirect to staff's user page
     }
 
+    $("#cookie-usage-modal").modal('show');
+
     $("#login-form").submit(function (e) {
         e.preventDefault();
         let e_mail = $("#e_mail").val();
