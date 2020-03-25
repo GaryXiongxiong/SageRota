@@ -1,5 +1,3 @@
-
--- we don't know how to generate root <with-no-name> (class Root) :(
 create table if not exists staff
 (
     sid int auto_increment
@@ -11,7 +9,7 @@ create table if not exists staff
     job_title varchar(30) not null,
     gender tinyint not null comment '1:male 0:female',
     status tinyint default 1 not null comment '1: not working;2: at working;3:quit job',
-    password varchar(250) not null,
+    password varchar(250),
     constraint e_mail_unique
         unique (e_mail),
     constraint phone_number_unique
@@ -47,3 +45,15 @@ create table if not exists supervisor
         unique (e_mail)
 );
 
+create table if not exists announcement
+(
+    aid int auto_increment
+        primary key,
+    title varchar(250) not null,
+    content longtext not null,
+    suid int null,
+    timestamp timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
+    constraint announcement_fk
+        foreign key (suid) references supervisor (SuId)
+            on update cascade on delete set null
+);
