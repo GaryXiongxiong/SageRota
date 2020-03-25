@@ -3,7 +3,7 @@ $(document).ready(function () {
     if (auth.level !== 1) {
         window.location.href = "su_login.html";
     }
-    loadNav(-1, auth);
+    loadNav(3, auth);
     loadContent();
 
     $("#edit_name").click(function () {
@@ -83,6 +83,7 @@ $(document).ready(function () {
 });
 
 function loadContent() {
+    showLoading();
     $.ajax({
         url: "api/su_info.php",
         method: "get",
@@ -94,8 +95,8 @@ function loadContent() {
                 $("#last_name").val(result.last_name);
                 $("#email").text(result.e_mail);
                 $("#e_mail").val(result.e_mail);
-
             }
+            removeLoading();
         }
     })
 }

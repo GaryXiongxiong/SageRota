@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="bootstrap/bootstrap_customized.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="row align-items-center justify-content-end login-bg">
+        <div class="col-md-6 login-col shadow-lg">
+            <div class="row align-items-center justify-content-center login-card">
+                <div class="col-lg-8">
+                    <div class="row justify-content-center logo-box">
+                        <img src="img/LOGO.png" alt="LOGO">
+                    </div>
+                    <br>
+                    <p class="text-center text-faded">Welcome back, please login into your account</p>
+                    <br>
+                    <form id="login-form" action="" method="post" onsubmit="return false">
+                        <span class="text-danger invisible" id="fail-notice">E-mail or password is incorrect.</span>
+                        <div class="form-row mt-3">
+                            <input type="email" class="form-control" placeholder="E-mail" id="e_mail"
+                                   name="e_mail" required>
+                        </div>
+                        <div class="form-row mt-3">
+                            <input type="password" class="form-control" placeholder="Password" id="pwd" name="pwd" required>
+                        </div>
+                        <div class="form-row mt-3">
+                            <button type="submit" class="btn btn-outline-primary col mr-2">Login</button>
+                            <a href="su_login.html" type="button" class="btn btn-outline-secondary col mt-1 mt-md-0">Supervisor login</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Cookie Usage -->
+    <div class="modal fade" id="cookie-usage-modal" data-backdrop="static" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">We value your privacy</h5>
+                </div>
+                <div class="modal-body">
+                    We use technologies, such as cookies, and process personal data, such as IP addresses and cookie identifiers, to personalise content based on your interests, measure the performance of content. Click below to consent to the use of this technology and the processing of your personal data for these purposes. You can change your mind and change your consent choices at any time by returning to this site.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="accept-cookie">Accept</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://kit.fontawesome.com/9b17a9fd41.js" crossorigin="anonymous"></script>
+<script src="lib/jquery-3.4.1.min.js"></script>
+<script src="lib/jquery.cookie.js"></script>
+<script src="bootstrap/bootstrap.bundle.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/login.js"></script>
+<script src="lib/sha256.min.js"></script>
+<script>
+</script>
+</html>

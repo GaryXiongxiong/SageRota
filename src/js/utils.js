@@ -37,16 +37,61 @@ function suAuthenticate() {
     return {level:level,suid:suid,name:name};
 }
 
+function authenticate() {
+    let level=-1;
+    let sid=0;
+    let name="";
+    $.ajax({
+        url:"api/user_auth.php",
+        method:"GET",
+        dataType:"json",
+        async: false,
+        success: function(result){
+            if(result.result==="success"){
+                level = result.level;
+                sid = result.sid;
+                name = result.name;
+            }
+        },
+    });
+    return {level:level,sid:sid,name:name};
+}
+
 function loadNav(index,auth){
-    $("navigation").load("components/nav.html",function () {
-        if(index>=0){
-            $(".nav-item").eq(index).children("a").addClass("active");
-        }
-        $(".user-center-link").text(auth.name);
-        $(".user-center-link").attr("href","su_profile.html");
-        $(".logout-btn").click(function () {
-            $.removeCookie("PHPSESSID",{path:"/"});
-            window.location.href="su_login.html";
-        });
-    })
+    if(auth.level===1){
+        $("navigation").load("components/su-nav.html",function () {
+            if(index>=0){
+                $(".nav-item").eq(index).children("a").addClass("active");
+            }
+            $(".user-center-link").text(auth.name);
+            $(".user-center-link").attr("href","su_profile.html");
+            $(".logout-btn").click(function () {
+                $.removeCookie("PHPSESSID",{path:"/"});
+                window.location.href="su_login.html";
+            });
+        })
+    }
+    if(auth.level===0){
+        $("navigation").load("components/u-nav.html",function () {
+            if(index>=0){
+                $(".nav-item").eq(index).children("a").addClass("active");
+            }
+            $(".user-center-link").text(auth.name);
+            $(".user-center-link").attr("href","#");
+            $(".logout-btn").click(function () {
+                $.removeCookie("PHPSESSID",{path:"/"});
+                window.location.href="login.html";
+            });
+        })
+    }
+}
+
+function randomPwd(){
+    let charset = "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678"
+    let length = charset.length;
+    let rndPwd="";
+    for(let i =0;i<8;i++){
+        rndPwd+= charset.charAt(Math.floor(Math.random()*length));
+    }
+    return rndPwd;
 }

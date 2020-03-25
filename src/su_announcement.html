@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supervisor profile</title>
+    <link rel="stylesheet" href="bootstrap/bootstrap_customized.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<navigation></navigation>
+<div class="container page-content pb-3">
+    <h1 id="name" class="main_title">Announcement</h1>
+    <hr>
+    <form id="announcement-editor">
+        <div class="form-group">
+            <label for="article_title">Title</label>
+            <input type="text" class="form-control" id="article_title" name="title">
+            <hr>
+            <label for="article_content">Content</label>
+            <textarea class="form-control" id="article_content" name="content"></textarea>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+
+</div>
+</body>
+<script src="https://kit.fontawesome.com/9b17a9fd41.js" crossorigin="anonymous"></script>
+<script src="lib/jquery-3.4.1.min.js"></script>
+<script src="lib/jquery.cookie.js"></script>
+<script src="bootstrap/bootstrap.bundle.js"></script>
+<script src="ckeditor/ckeditor.js"></script>
+<script src="js/su_announcement.js"></script>
+<script src="js/utils.js"></script>
+</html>

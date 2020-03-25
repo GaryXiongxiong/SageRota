@@ -2,11 +2,14 @@ $(document).ready(function () {
     let auth = suAuthenticate();
     if (auth.level === 1) {
         window.location.href = "staff.html";
-    } else if (auth.level === 0) {
-        //    Redirect to staff's user page
     }
 
-    $("#cookie-usage-modal").modal('show');
+    if($.cookie('acceptCookieUsage')!=="true"){
+        $("#cookie-usage-modal").modal('show');
+        $("#accept-cookie").click(function () {
+            $.cookie('acceptCookieUsage',true,{expires:7,path:"/"});
+        })
+    }
 
     $("#login-form").submit(function (e) {
         e.preventDefault();
@@ -22,9 +25,6 @@ $(document).ready(function () {
                 if(result.result==="success"){
                     if(result.level===1){
                         window.location.href = "staff.html";
-                    }
-                    if(result.level===0){
-                    //    goto users page
                     }
                 }
                 else{
