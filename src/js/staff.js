@@ -1,6 +1,11 @@
-import {getUrlParam, showLoading, removeLoading} from './utils.js';
-
 $(document).ready(function () {
+    //Check the authentication of user
+    let auth = suAuthenticate();
+    if(auth.level!==1){
+        window.location.href="su_login.html";
+    }
+
+    loadNav(0,auth);
 
     //Get page number from url
     let page = getUrlParam("p");
@@ -90,6 +95,45 @@ $(document).ready(function () {
         });
     });
 
+    //delete staff form submission
+    $("#delete-staff-form").submit(function (e) {
+        e.preventDefault();
+        let data = $('#delete-staff-form').serialize();
+        let submitData = decodeURIComponent(data);
+        $.ajax({
+            method: "POST",
+            dataType: "json",
+            url: "api/delete_staff.php",
+            data: submitData,
+            success: function (result) {
+                if (result.result === "success") {
+                    $("#delete-staff-popup").modal("hide");
+                    $("#delete-staff-form")[0].reset();
+                    $(".main_title").after("<div class='alert alert-success alert-dismissible fade show' role='alert'>" +
+                        "  <strong>Delete Success!</strong>" +
+                        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+                        "<span aria-hidden='true'>&times;</span> " +
+                        "</button> " +
+                        "</div>");
+                    loadContent(page);
+                    loadPages();
+                } else if (result.result === "fail") {
+                    $("#delete-staff-popup").modal("hide");
+                    $("#delete-staff-form")[0].reset();
+                    $(".main_title").after("<div class='alert alert-danger alert-dismissible fade show' role='alert'>" +
+                        "  <strong>Delete Fail! Please check if the staff is assign to a shift.</strong>" +
+                        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+                        "<span aria-hidden='true'>&times;</span> " +
+                        "</button> " +
+                        "</div>");
+                }
+
+            },
+            error: function () {
+                console.log("Fail");
+            }
+        });
+    });
 
 });
 
@@ -101,28 +145,28 @@ function loadPages() {
         url: "api/staff_list_count.php",
         method: "POST",
         dataType: "json",
-        success(result) {
+        success: function (result) {
             let pages = result.pageCount;
             let page = parseInt(getUrlParam("p"));
             if (isNaN(page)) page = 1;
             for (let i = 1; i <= pages; i++) {
                 let item = document.createElement("li");
-                item.setAttribute("class","page-item");
-                if(i===page){
+                item.setAttribute("class", "page-item");
+                if (i === page) {
                     $(item).addClass("active");
                 }
-                item.innerHTML="<a class='page-link' href='?p=" + i + "'>" + i + "</a>";
+                item.innerHTML = "<a class='page-link' href='?p=" + i + "'>" + i + "</a>";
                 $("#pagination #next-page").parent(".page-item").before(item);
             }
-            if(page===1){
+            if (page === 1) {
                 $("#pagination #previous-page").parent(".page-item").addClass("disabled");
-            }else{
-                $("#pagination #previous-page").attr("href","?p="+(page-1));
+            } else {
+                $("#pagination #previous-page").attr("href", "?p=" + (page - 1));
             }
-            if(page===pages){
+            if (page === pages) {
                 $("#pagination #next-page").parent(".page-item").addClass("disabled");
-            }else{
-                $("#pagination #next-page").attr("href","?p="+(page+1));
+            } else {
+                $("#pagination #next-page").attr("href", "?p=" + (page + 1));
             }
         }
     })
@@ -139,10 +183,10 @@ function loadContent(page) {
         method: "POST",
         dataType: "json",
         data: {page: page},
-        beforeSend: function(){
-          showLoading();
+        beforeSend: function () {
+            showLoading();
         },
-        success(result) {
+        success: function (result) {
             let staffs = result.staff;
             if (staffs != null) {
                 staffs.forEach(appendStaff);
@@ -158,7 +202,7 @@ function loadContent(page) {
 
 function appendStaff(staff) {
     let staffContent =
-        "<div class='col-lg-4 staff-info' data-id='" + staff.sid + "' data-name='" + staff.first_name + "'>" +
+        "<div class='col-lg-4 col-md-6 staff-info' data-id='" + staff.sid + "' data-name='" + staff.first_name + "'>" +
         "                <div class='card'>" +
         "                    <div class='card-body'>" +
         "                        <h5>" + staff.first_name + " " + staff.last_name + "</h5>" +
@@ -171,9 +215,10 @@ function appendStaff(staff) {
         "                            <br>" +
         "                            <i class='fas fa-briefcase'></i>" +
         "                            " + staff.job_title +
+        "                            <br>" +
         "                        </p>" +
         "                        <span class='btn btn-primary btn-staff-edit'>Edit</span>" +
-        "                        <span class='btn btn-danger btn-staff-delete'>Delete</span>" +
+        "                        <span class='btn btn-secondary btn-staff-delete'>Delete</span>" +
         "                    </div>" +
         "                </div>" +
         "            </div>";
@@ -187,54 +232,16 @@ function bindDeleteEvent() {
         //bind delete popup
         $("#delete-staff-popup").modal("show");
         //bind confirm delete to send request
-        $("#delete-staff-popup #confirm-delete").click(function () {
             //console.log("delete:"+sid+","+first_name);
-            $.ajax({
-                url: "api/delete_staff.php",
-                method: "POST",
-                dataType: "json",
-                data: {sid: sid, name: first_name},
-                success(result) {
-                    if (result.result === "success") {
-                        $(".main_title").after("<div class='alert alert-success alert-dismissible fade show' role='alert'>" +
-                            "  <strong>Delete Success!</strong>" +
-                            "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
-                            "<span aria-hidden='true'>&times;</span> " +
-                            "</button> " +
-                            "</div>");
-                    } else if (result.result === "fail") {
-                        $(".main_title").after("<div class='alert alert-danger alert-dismissible fade show' role='alert'>" +
-                            "  <strong>Delete Fail! Please check if the staff is assign to a shift.</strong>" +
-                            "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
-                            "<span aria-hidden='true'>&times;</span> " +
-                            "</button> " +
-                            "</div>");
-                    }
-                },
-                fail() {
-                    $(".main_title").after("<div class='alert alert-danger alert-dismissible fade show' role='alert'>" +
-                        "  <strong>Delete Fail! Please check if the staff is exist</strong>" +
-                        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
-                        "<span aria-hidden='true'>&times;</span> " +
-                        "</button> " +
-                        "</div>");
-                },
-                complete: function () {
-                    //unbind the delete action after deleting
-                    $("#delete-staff-popup #confirm-delete").unbind();
-                    $("#delete-staff-popup").modal("hide");
-                    loadContent();
-                    loadPages();
-                }
-            });
-        });
+        $("#delete-staff-form #delete_sid").val(sid);
+        $("#delete-staff-form #delete_name").val(first_name);
         $("#delete-staff-popup #cancel-delete").click(function () {
             //unbind the delete action after canceling
-            $("#delete-staff-popup #confirm-delete").unbind();
+            $("#delete-staff-popup #delete-staff-form")[0].reset();
         });
         $("#delete-staff-popup .close").click(function () {
             //unbind the delete action after canceling
-            $("#delete-staff-popup #confirm-delete").unbind();
+            $("#delete-staff-popup #delete-staff-form")[0].reset();
         })
     });
 }
@@ -249,10 +256,10 @@ function bindEditEvent() {
             dataType: "json",
             method: "POST",
             data: {sid: sid, name: first_name},
-            success(result) {
+            success: function (result) {
                 if (result.staff.length === 1) {
                     let staff = result.staff[0];
-                    $("#edit-staff-form #sid").val(staff.sid);
+                    $("#edit-staff-form #edit_sid").val(staff.sid);
                     $("#edit-staff-form #edit_first_name").val(staff.first_name);
                     $("#edit-staff-form #edit_last_name").val(staff.last_name);
                     $("#edit-staff-form #edit_phone_number").val(staff.phone_number);
@@ -267,4 +274,3 @@ function bindEditEvent() {
         })
     });
 }
-

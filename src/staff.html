@@ -2,38 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Staff List</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="bootstrap/bootstrap_customized.css">
     <link rel="stylesheet" href="css/style.css">
-    <script src="https://kit.fontawesome.com/9b17a9fd41.js" crossorigin="anonymous"></script>
-    <script src="js/jquery-3.4.1.min.js"></script>
-    <script src="js/bootstrap.bundle.js"></script>
-    <script type="module" src="js/staff.js"></script>
-    <script type="module" src="js/utils.js"></script>
 </head>
 <body>
 
-
-<!--Navigate bar-->
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark navigation">
-    <a class="navbar-brand" href="staff.html">SAGE</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav nav-justified">
-            <li class="nav-item">
-                <a class="nav-link active" href="staff.html">Staff</a>
-            </li>
-            <li class="nav-item">
-<!--                TODO: Link to finished Timetable page-->
-                <a class="nav-link" href="#">Timetable</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-<!--Navigate bar end-->
+<navigation></navigation>
 
 <!--Page content-->
 <div class="container" id="main-container">
@@ -47,7 +23,7 @@
         </div>
         <div class="row staff-list" id="staff-list">
             <!--Template of staff entry in the staff list                                -->
-            <!--    <div class="col-lg-3 staff-info" data-id="1">-->
+            <!--    <div class="col-lg-4 col-md-6 staff-info" data-id="1">-->
             <!--        <div class="card">-->
             <!--            <div class="card-body">-->
             <!--                <h5>Gary Jiang</h5>-->
@@ -61,8 +37,8 @@
             <!--                    <i class="fas fa-briefcase"></i>-->
             <!--                    Product Manager-->
             <!--                </p>-->
-            <!--                <span class="btn btn-primary">Edit</span>-->
-            <!--                <span class="btn btn-danger btn-delete">Delete</span>-->
+            <!--                <span class="btn btn-primary btn-staff-edit">Edit</span>-->
+            <!--                <span class="btn btn-secondary btn-staff-delete">Delete</span>-->
             <!--            </div>-->
             <!--        </div>-->
             <!--    </div>-->
@@ -71,8 +47,8 @@
         <div class="row justify-content-end pagination-row">
             <ul class="pagination" id="pagination">
                 <li class="page-item"><a class="page-link" href="#" id="previous-page">Previous</a></li>
-<!--                <li class="page-item active"><a class="page-link" href="#">1</a></li>-->
-<!--                <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+                <!--                <li class="page-item active"><a class="page-link" href="#">1</a></li>-->
+                <!--                <li class="page-item"><a class="page-link" href="#">2</a></li>-->
                 <li class="page-item"><a class="page-link" href="#" id="next-page">Next</a></li>
             </ul>
         </div>
@@ -98,35 +74,35 @@
                     <div class="form-group">
                         <label for="first_name">First name:</label>
                         <input type="text" class="form-control" placeholder="First name" id="first_name"
-                               name="first_name">
+                               name="first_name" required>
                     </div>
                     <div class="form-group">
                         <label for="last_name">Last name:</label>
-                        <input type="text" class="form-control" placeholder="Last name" id="last_name" name="last_name">
+                        <input type="text" class="form-control" placeholder="Last name" id="last_name" name="last_name" required>
                     </div>
                     <div class="form-group">
                         <label for="phone_number">Phone number:</label>
                         <input type="tel" class="form-control" placeholder="Phone number" id="phone_number"
-                               name="phone_number">
+                               name="phone_number" required>
                     </div>
                     <div class="form-group">
                         <label for="e_mail">E-mail</label>
-                        <input type="email" class="form-control" placeholder="E-mail" id="e_mail" name="e_mail">
+                        <input type="email" class="form-control" placeholder="E-mail" id="e_mail" name="e_mail" required>
                     </div>
                     <div class="form-group">
                         <label for="job_title">Job title</label>
-                        <input type="text" class="form-control" placeholder="Job title" id="job_title" name="job_title">
+                        <input type="text" class="form-control" placeholder="Job title" id="job_title" name="job_title" required>
                     </div>
                     <div class="form-group">
                         <label for="gender">Gender:</label>
-                        <select class="form-control" id="gender" name="gender">
+                        <select class="form-control" id="gender" name="gender" required>
                             <option value="0">Female</option>
                             <option value="1">Male</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="status">Status:</label>
-                        <select class="form-control" id="status" name="status">
+                        <select class="form-control" id="status" name="status" required>
                             <option value="1">Not working</option>
                             <option value="2">Working</option>
                             <option value="3">Quit job</option>
@@ -158,8 +134,17 @@
                 <p>You are going to remove staff from this list permanently. Do you confirm?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="confirm-delete">Yes, Delete</button>
-                <button type="button" class="btn btn-primary" id="cancel-delete" data-dismiss="modal">Cancel</button>
+                <form id="delete-staff-form" action="" method="post" onsubmit="return false">
+                    <label for="delete_sid" class="hide-input"></label><input type="text" class="hide-input"
+                                                                              placeholder="sid" id="delete_sid"
+                                                                              name="sid" required>
+                    <label for="delete_name" class="hide-input"></label><input type="text" class="hide-input"
+                                                                               placeholder="name" id="delete_name"
+                                                                               name="name" required>
+                    <button type="submit" class="btn btn-danger" id="confirm-delete">Yes, Delete</button>
+                    <button type="button" class="btn btn-primary" id="cancel-delete" data-dismiss="modal">Cancel
+                    </button>
+                </form>
             </div>
         </div>
     </div>
@@ -180,30 +165,31 @@
             <!-- popup body -->
             <div class="modal-body">
                 <form id="edit-staff-form" action="" method="post" onsubmit="return false">
-                    <label for="sid" class="hide-input"></label><input type="text" class="form-control hide-input" placeholder="sid" id="sid" name="sid">
+                    <label for="edit_sid" class="hide-input"></label>
+                    <input type="text" class="hide-input" placeholder="sid" id="edit_sid" name="sid">
                     <div class="form-group">
                         <label for="edit_first_name">First name:</label>
                         <input type="text" class="form-control" placeholder="First name" id="edit_first_name"
-                               name="first_name">
+                               name="first_name" required>
                     </div>
                     <div class="form-group">
                         <label for="edit_last_name">Last name:</label>
                         <input type="text" class="form-control" placeholder="Last name" id="edit_last_name"
-                               name="last_name">
+                               name="last_name" required>
                     </div>
                     <div class="form-group">
                         <label for="edit_phone_number">Phone number:</label>
                         <input type="tel" class="form-control" placeholder="Phone number" id="edit_phone_number"
-                               name="phone_number">
+                               name="phone_number" required>
                     </div>
                     <div class="form-group">
                         <label for="edit_e_mail">E-mail</label>
-                        <input type="email" class="form-control" placeholder="E-mail" id="edit_e_mail" name="e_mail">
+                        <input type="email" class="form-control" placeholder="E-mail" id="edit_e_mail" name="e_mail" required>
                     </div>
                     <div class="form-group">
                         <label for="edit_job_title">Job title</label>
                         <input type="text" class="form-control" placeholder="Job title" id="edit_job_title"
-                               name="job_title">
+                               name="job_title" required>
                     </div>
                     <div class="form-group">
                         <label for="edit_gender">Gender:</label>
@@ -232,7 +218,7 @@
 </div>
 <!--Edit popup end-->
 
-<div class="modal bd-example-modal-sm" role="dialog" id="loading-popup">
+<div class="modal" data-backdrop="static" role="dialog" id="loading-popup">
     <div class="modal-dialog modal-sm">
         <button class="btn btn-primary loading" type="button" disabled>
             <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
@@ -240,8 +226,11 @@
         </button>
     </div>
 </div>
-
-<script>
-</script>
 </body>
+<script src="https://kit.fontawesome.com/9b17a9fd41.js" crossorigin="anonymous"></script>
+<script src="lib/jquery-3.4.1.min.js"></script>
+<script src="lib/jquery.cookie.js"></script>
+<script src="bootstrap/bootstrap.bundle.js"></script>
+<script src="js/staff.js"></script>
+<script src="js/utils.js"></script>
 </html>
