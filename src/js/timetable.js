@@ -184,13 +184,16 @@ function loadGoto() {
 }
 
 function loadContent() {
-    let startDate = loadStartDate();
+    let startDate = getPreviousMonday(loadStartDate());
+    let endDate = new Date(startDate);
+    endDate.setDate(startDate.getDate() + 62);
     $(".shift-info").remove();
+
     $.ajax({
         url: "api/timetable_list.php",
         method: "POST",
         dataType: "json",
-        data: {start_date: startDate.format("YYYY-MM-DD")},
+        data: {start_date: startDate.format("YYYY-MM-DD"), end_date: endDate.format("YYYY-MM-DD")},
         beforeSend: function () {
             showLoading();
         },
@@ -380,3 +383,18 @@ function loadCurrentShiftStyle() {
     let dateStr = date.format("YYYY-MM-DD");
     $("[data-date=" + dateStr +"]").children(".card").addClass("current-shift");
 }
+
+//Function to get nearest previous Moday
+function getPreviousMonday(date){
+    let currentDate = new Date(date);
+    let day =currentDate.getDay();
+    var z ;
+    // The difference between two consecutive days is 86400000 mseconds
+    if (day>0) {
+        z = currentDate - (day-1)*86400000;
+      } else {
+        z = currentDate-6*86400000;
+      }
+    return new Date(z);
+}
+
