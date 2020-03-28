@@ -24,3 +24,4 @@ https://documenter.getpostman.com/view/9762982/SWTHbb5q?version=latest
 - js-date-format https://github.com/UziTech/js-date-format
 - bootstrap-select https://github.com/snapappointments/bootstrap-select/
 - js-sha256 https://github.com/emn178/js-sha256
+- CKEditor https://github.com/ckeditor/ckeditor4

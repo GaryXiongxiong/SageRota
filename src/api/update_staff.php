@@ -1,6 +1,7 @@
 <?php
 session_start();
 //    This part is used to control unauthenticated request, uncomment these before deploy
+//    Need to check if current user is supervisor or the staff himself
 //    if(!(isset($_SESSION['suid'])&&isset($_SESSION['level'])&&$_SESSION['level']==1)){
 //        return;
 //    }

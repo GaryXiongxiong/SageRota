@@ -344,7 +344,7 @@ function bindEditEvent() {
                     url: "api/shift_info.php",
                     method: "POST",
                     dataType: "json",
-                    data: {id: id, start_date: startDate},
+                    data: {start_date: startDate},
                     success: function (result) {
                         if (result.shift.length === 1) {
                             let shift = result.shift[0];

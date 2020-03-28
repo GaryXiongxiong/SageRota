@@ -1,11 +1,11 @@
 $(document).ready(function () {
     //Check the authentication of user
     let auth = suAuthenticate();
-    if(auth.level!==1){
-        window.location.href="su_login.html";
+    if (auth.level !== 1) {
+        window.location.href = "su_login.html";
     }
 
-    loadNav(0,auth);
+    loadNav(0, auth);
 
     //Get page number from url
     let page = getUrlParam("p");
@@ -232,7 +232,7 @@ function bindDeleteEvent() {
         //bind delete popup
         $("#delete-staff-popup").modal("show");
         //bind confirm delete to send request
-            //console.log("delete:"+sid+","+first_name);
+        //console.log("delete:"+sid+","+first_name);
         $("#delete-staff-form #delete_sid").val(sid);
         $("#delete-staff-form #delete_name").val(first_name);
         $("#delete-staff-popup #cancel-delete").click(function () {
@@ -273,4 +273,39 @@ function bindEditEvent() {
             }
         })
     });
+    //Reset password button event
+    $("#reset-staff-pwd").click(function () {
+        let sid = $("#edit-staff-form #edit_sid").val();
+        let newPwd = randomPwd();
+        let encryptedPwd = sha256(newPwd);
+        $.ajax({
+            url:"api/user_reset_pwd.php",
+            method:"post",
+            dataType:"json",
+            data:{sid:sid,new_pwd:encryptedPwd},
+            success: function (result) {
+                if (result.result === "success") {
+                    $("#edit-staff-popup").modal("hide");
+                    $("#edit-staff-form")[0].reset();
+                    $(".main_title").after("<div class='alert alert-success alert-dismissible fade show' role='alert'>" +
+                        "  <strong>Reset success, please save the new password carefully, New Password is: "+newPwd+"</strong>" +
+                        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+                        "<span aria-hidden='true'>&times;</span> " +
+                        "</button> " +
+                        "</div>");
+                    loadContent(page);
+                } else if (result.result === "fail") {
+                    $("#edit-staff-popup").modal("hide");
+                    $("#edit-staff-form")[0].reset();
+                    $(".main_title").after("<div class='alert alert-danger alert-dismissible fade show' role='alert'>" +
+                        "  <strong>Reset Fail</strong>" +
+                        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+                        "<span aria-hidden='true'>&times;</span> " +
+                        "</button> " +
+                        "</div>");
+                }
+
+            }
+        })
+    })
 }
