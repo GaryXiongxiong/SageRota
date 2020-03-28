@@ -181,6 +181,10 @@ function loadGoto() {
     $("#goto-btn").click(function () {
         window.location.href = '?start_date=' + $(".datepicker").datepicker('getDate');
     })
+    $(".datepicker_start").datepicker({
+        defaultValue: new Date()});
+    $(".datepicker_end").datepicker({
+            defaultValue: new Date()});
 }
 
 function loadContent() {
@@ -214,6 +218,7 @@ function loadContent() {
             bindDeleteEvent();
             bindEditEvent();
             removeLoading();
+            bindAutoAssignEvent();
         }
     });
 }
@@ -398,3 +403,10 @@ function getPreviousMonday(date){
     return new Date(z);
 }
 
+function bindAutoAssignEvent() {
+    $(".btn-shift-auto-assign").click(function () {
+
+        $("#auto-assign-shift-popup").modal("show");
+
+    });
+} 

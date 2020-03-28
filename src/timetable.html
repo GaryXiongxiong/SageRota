@@ -18,6 +18,7 @@
     <!--    staff List-->
     <div class="container-fluid page-content" id="page-content">
         <h1 class="main_title">Timetable</h1>
+        <span class="btn btn-primary btn-shift-auto-assign">Assign Staff Automatically</span>
         <HR>
         <div class="row timetable-list" id="timetable-list">
             <!--Template of shift entry in the shift list                                -->
@@ -160,6 +161,58 @@
     </div>
 </div>
 <!--Delete Modal end-->
+
+<!--Auto Assign Modal start-->
+<div class="modal fade" role="dialog" id="auto-assign-shift-popup">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!--Modal header-->
+            <div class="modal-header">
+                <h5 class="modal-title">Auto Assign Staff into Empty Shift Slots</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!--Modal body-->
+            <div class="modal-body">
+                <p>Select the period for which you would like the system to automatically assign 
+                    staff into empty shift slots</p>
+            
+                <div class="input-group ">
+                    <div class="input-group-append">
+                        <label for="auto-assign-st-date-btn">Start Date:</label><br>
+                    </div>
+                    <input type="text" id="auto-assign-st-date-btn" class="form-control datepicker_start" placeholder="Date" aria-label="Date"
+                    aria-describedby="auto-assign-st-date-btn">
+                </div>
+
+                <div class="input-group ">
+                    <div class="input-group-append">
+                        <label for="auto-assign-end-date-btn">End Date:</label><br>
+                    </div>
+                    <input type="text" id="auto-assign-end-date-btn" class="form-control datepicker_end" placeholder="Date" aria-label="Date"
+                    aria-describedby="auto-assign-end-date-btn">
+                </div>
+                
+            </div>
+
+            <!--Modal footer-->
+            <div class="modal-footer">
+                <form id="auto-assign-shift-form" action="" method="post" onsubmit="return false" >
+                    <label for="auto_assign_id" class="hide-input"></label>
+                    <input type="text" class="hide-input" placeholder="id" id="auto_assign_id" name="id">
+                    <label for="auto_assign_start_date" class="hide-input"></label>
+                    <input type="text" class="hide-input" placeholder="start date" id="auto_assign_start_date"
+                           name="start_date">
+                    <button type="button" class="btn btn-danger" id="confirm-auto-assign">Yes</button>
+                    <button type="button" class="btn btn-primary" id="cancel-auto-assign" data-dismiss="modal">Cancel
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Auto Assign Modal end-->
 
 <!--Edit Modal start-->
 <div class="modal fade" id="edit-shift-popup">
