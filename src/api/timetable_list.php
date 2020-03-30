@@ -9,13 +9,14 @@ $datainfo = file_get_contents("data.json");
 $conninfo = json_decode($datainfo);
 $conn = new mysqli($conninfo->{"host"}, $conninfo->{"user"}, $conninfo->{"password"}, $conninfo->{"dbname"}, $conninfo->{"port"});
 $start_date = $_REQUEST['start_date'];
+$end_date = $_REQUEST['end_date'];
 /**
  * get the start and end date of the week which contains the input date
  * @param string $inputDate format：YYYY-MM-DD
  * @param int $weekStart the day that as the begin of a week,0 is Sunday,1 is Monday,etc.
  * @return array array( "startDate ",  "endDate");
  */
-function getAWeekTimeSlot($inputDate, $weekStart = 0)
+/* function getAWeekTimeSlot($inputDate, $weekStart = 0)
 {
     if (!$inputDate) {
         $inputDate = date("Y-m-d");
@@ -31,10 +32,10 @@ $timeSlot1 = getAWeekTimeSlot($start_date, 1);//default Monday is the beginning 
 $weekStartDate = $timeSlot1[0];
 $end_date = date("Y-m-d", strtotime("$start_date  +56  days "));//default 9 weeks
 $timeSlot2 = getAWeekTimeSlot($end_date, 1);
-$weekEndDate = $timeSlot2[1];
+$weekEndDate = $timeSlot2[1]; */
 
 $query = $conn->prepare("SELECT id,staff_sid,first_name,last_name,start_time,end_time,location,remark FROM shift left join staff on staff_sid=sid where start_time >= ? and end_time <= ?");
-$query->bind_param("ss", $weekStartDate, $weekEndDate);
+$query->bind_param("ss", $start_date, $end_date);
 $query->execute();
 $result = $query->get_result()->fetch_all();
 $query->close();
