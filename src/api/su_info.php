@@ -9,9 +9,8 @@ $conninfo = json_decode($datainfo);
 $conn = new mysqli($conninfo->{"host"}, $conninfo->{"user"}, $conninfo->{"password"}, $conninfo->{"dbname"}, $conninfo->{"port"});
 $suId = $_SESSION['suid'];
 $firstName = $_SESSION['name'];
-$level = $_SESSION['level'];
-$query = $conn->prepare("SELECT SuId,e_mail,first_name,last_name,supervisor.level FROM supervisor where SuId=? and first_name=? and level=?");
-$query->bind_param("isi", $suId, $firstName, $level);
+$query = $conn->prepare("SELECT SuId,e_mail,first_name,last_name FROM supervisor where SuId=? and first_name=?");
+$query->bind_param("is", $suId, $firstName);
 $query->execute();
 $result = $query->get_result()->fetch_all();
 $query->close();
@@ -25,7 +24,6 @@ if (count($result) == 1) {
     $eMail = $result[0][1];
     $firstName = $result[0][2];
     $lastName = $result[0][3];
-    $level = $result[0][4];
     $flag = "success";
 }
 $resDict = array(
@@ -34,7 +32,6 @@ $resDict = array(
     "e_mail" => $eMail,
     "first_name" => $firstName,
     "last_name" => $lastName,
-    "level" => $level,
 );
 $resJson = json_encode($resDict);
 echo $resJson;
