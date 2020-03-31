@@ -152,7 +152,7 @@ function loadStartDate() {
     let startDate = getUrlParam("start_date");
     let date;
     let dayOfWeek;
-    if (startDate == null) {
+    if (startDate === null||startDate===""||isNaN(startDate)) {
         date = new Date();
     } else {
         date = new Date(startDate);
@@ -407,7 +407,7 @@ function bindAutoAssignEvent() {
     $(".btn-shift-auto-assign").click(function () {
         $("#auto-assign-shift-popup").modal("show");
     });
-} 
+}
 
 $("#confirm-auto-assign").click(function () {
     //Define start date and end date
@@ -425,7 +425,7 @@ $("#confirm-auto-assign").click(function () {
     // Get first and last mondays of the selected period
     let firstMonday=getPreviousMonday(startDate);
     let lastMonday=getPreviousMonday(endDate+7*86400000); //7 here because because we need a number that is greater than the end of lastMonday's week and less than the end of the next week
- 
+
     $.ajax({
         url: "api/auto_assign.php",
         method: "POST",
