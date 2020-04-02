@@ -151,36 +151,74 @@ $(document).ready(function () {
         let startDate = new Date($(".datepicker_start").datepicker('getDate'));
         let endDate = new Date($(".datepicker_end").datepicker('getDate'));
 
-        if(endDate<startDate)
-        {
+        if (endDate < startDate) {
             //loadContent();
             $("#auto-assign-shift-popup").modal("hide");
-            alert("Error\nEnd date cannot be earlier than start date!\nTry again");
+            $(".main_title").after("<div class='alert alert-danger alert-dismissible fade show' role='alert'>" +
+                "  <strong>End date cannot be earlier than start date!</strong>" +
+                "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+                "<span aria-hidden='true'>&times;</span> " +
+                "</button> " +
+                "</div>");
             return;
 
         }
         // Get first and last mondays of the selected period
-        let firstMonday=getPreviousMonday(startDate);
-        let lastMonday=getPreviousMonday(endDate+7*86400000); //7 here because because we need a number that is greater than the end of lastMonday's week and less than the end of the next week
+        let firstMonday = getPreviousMonday(startDate);
 
-        $.ajax({
-            url: "api/auto_assign.php",
-            method: "POST",
-            dataType: "json",
-            //async: false,
-            data: {start_date: firstMonday.format("YYYY-MM-DD"), end_date: lastMonday.format("YYYY-MM-DD")},
-            beforeSend: function () {
-                showLoading();
-            },
-            success: function (result) {
-                let status=result.status;
-                console.log(status);
-            },
-        });
+        let lastMonday = getPreviousMonday(endDate);
 
-        loadContent();
-        $("#auto-assign-shift-popup").modal("hide");
+        if (document.getElementById('replace_shifts').checked) {
+            $.ajax({
+                url: "api/auto_assign_replace.php",
+                method: "POST",
+                dataType: "json",
+                //async: false,
+                data: {start_date: firstMonday.format("YYYY-MM-DD"), end_date: lastMonday.format("YYYY-MM-DD")},
+                beforeSend: function () {
+                    showLoading();
+                },
+                success: function (result) {
+                    let status = result.status;
+                    console.log(status);
+                    $("#auto-assign-shift-popup").modal("hide");
+                    removeLoading();
+                    loadContent();
+                    $(".main_title").after("<div class='alert alert-success alert-dismissible fade show' role='alert'>" +
+                        "  <strong>Given period has been filled</strong>" +
+                        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+                        "<span aria-hidden='true'>&times;</span> " +
+                        "</button> " +
+                        "</div>");
+                },
+            });
+        } else {
+            $.ajax({
+                url: "api/auto_assign.php",
+                method: "POST",
+                dataType: "json",
+                //async: false,
+                data: {start_date: firstMonday.format("YYYY-MM-DD"), end_date: lastMonday.format("YYYY-MM-DD")},
+                beforeSend: function () {
+                    showLoading();
+                },
+                success: function (result) {
+                    let status = result.status;
+                    console.log(status);
+                    $("#auto-assign-shift-popup").modal("hide");
+                    removeLoading();
+                    loadContent();
+                    $(".main_title").after("<div class='alert alert-success alert-dismissible fade show' role='alert'>" +
+                        "  <strong>Given period has been filled</strong>" +
+                        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+                        "<span aria-hidden='true'>&times;</span> " +
+                        "</button> " +
+                        "</div>");
+                },
+            });
+        }
     });
+
 });
 
 function loadStartDate() {
@@ -442,59 +480,5 @@ function bindAutoAssignEvent() {
     $(".btn-shift-auto-assign").click(function () {
         $("#auto-assign-shift-popup").modal("show");
     });
-} 
-
-$("#confirm-auto-assign").click(function () {    
-    //Define start date and end date
-    let startDate = new Date($(".datepicker_start").datepicker('getDate'));
-    let endDate = new Date($(".datepicker_end").datepicker('getDate'));
-
-    if(endDate<startDate)
-    {
-        //loadContent();
-        $("#auto-assign-shift-popup").modal("hide");
-        alert("Error\nEnd date cannot be earlier than start date!\nTry again");
-        return;
-
-    }
-    // Get first and last mondays of the selected period
-    let firstMonday=getPreviousMonday(startDate);
-    // let dddd=getPreviousMonday(endDate);
-    // dddd.setDate(dddd.getDate() + 7);
-    let lastMonday=getPreviousMonday(endDate); 
-
-    if(document.getElementById('replace_shifts').checked)
-    {
-        $.ajax({
-            url: "api/auto_assign_replace.php",
-            method: "POST",
-            dataType: "json",
-            //async: false,
-            data: {start_date: firstMonday.format("YYYY-MM-DD"), end_date: lastMonday.format("YYYY-MM-DD")},
-             beforeSend: function () {
-                 showLoading();
-             },
-            success: function (result) {
-                let status=result.status;
-                console.log(status);
-            },
-        });
-    }
-    else
-    {
-        $.ajax({
-            url: "api/auto_assign.php",
-            method: "POST",
-            dataType: "json",
-            //async: false,
-            data: {start_date: firstMonday.format("YYYY-MM-DD"), end_date: lastMonday.format("YYYY-MM-DD")},
-             beforeSend: function () {
-                 showLoading();
-             },
-            success: function (result) {
-                let status=result.status;
-                console.log(status);
-            },
-        });
-    }  
+}
 

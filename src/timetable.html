@@ -18,8 +18,8 @@
     <!--    staff List-->
     <div class="container-fluid page-content" id="page-content">
         <h1 class="main_title">Timetable</h1>
-        <span class="btn btn-primary btn-shift-auto-assign">Assign Staff Automatically</span>
         <HR>
+        <span class="btn btn-primary btn-shift-auto-assign">Assign Staff Automatically</span>
         <div class="row timetable-list" id="timetable-list">
             <!--Template of shift entry in the shift list                                -->
             <!--            <div class="col-lg-4 col-md-6 shift-info" data-id="1" data-date="">-->
@@ -62,7 +62,7 @@
                 <li class="page-item"><a class="page-link" href="?">Today</a></li>
                 <li class="page-item"><a class="page-link" href="#" id="next-page">Next</a></li>
             </ul>
-            <div class="col-md-3">
+            <div class="col-md-3 pr-0">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control datepicker" placeholder="Date" aria-label="Date"
                            aria-describedby="goto-btn">
@@ -175,30 +175,30 @@
             </div>
             <!--Modal body-->
             <div class="modal-body">
-                <p>Select the period for which you would like the system to automatically assign 
+                <p class="text-secondary">Select the period for which you would like the system to automatically assign
                     staff into empty shift slots</p>
-            
-                <div class="input-group ">
-                    <div class="input-group-append">
-                        <label for="auto-assign-st-date-btn">Start Date </label><br>
+
+                <div class="input-group row">
+                    <label for="auto-assign-st-date-btn" class="col-sm-3 col-form-label">Start Date </label><br>
+                    <div class="col-sm-9">
+                        <input type="text" id="auto-assign-st-date-btn" class="form-control datepicker_start" placeholder="Date" aria-label="Date"
+                               aria-describedby="auto-assign-st-date-btn">
                     </div>
-                    <input type="text" id="auto-assign-st-date-btn" class="form-control datepicker_start" placeholder="Date" aria-label="Date"
-                    aria-describedby="auto-assign-st-date-btn">
                 </div>
 
-                <div class="input-group ">
-                    <div class="input-group-append">
-                        <label for="auto-assign-end-date-btn">End Date  </label><br>
+                <div class="input-group row mt-2">
+                    <label for="auto-assign-end-date-btn" class="col-sm-3 col-form-label">End Date  </label><br>
+                    <div class="col-sm-9">
+                        <input type="text" id="auto-assign-end-date-btn" class="form-control datepicker_end" placeholder="Date" aria-label="Date"
+                        aria-describedby="auto-assign-end-date-btn">
                     </div>
-                    <input type="text" id="auto-assign-end-date-btn" class="form-control datepicker_end" placeholder="Date" aria-label="Date"
-                    aria-describedby="auto-assign-end-date-btn">
                 </div>
                 <br>
-                
+
                 <input type="checkbox" id="replace_shifts" name="replace_shifts" value="replace_shifts">
                 <label for="replace_shifts"> Replace Existing Shifts (if any)</label><br>
-                  
-                
+
+
             </div>
 
             <!--Modal footer-->
@@ -209,8 +209,8 @@
                     <label for="auto_assign_start_date" class="hide-input"></label>
                     <input type="text" class="hide-input" placeholder="start date" id="auto_assign_start_date"
                            name="start_date">
-                    <button type="button" class="btn btn-danger" id="confirm-auto-assign">Yes</button>
-                    <button type="button" class="btn btn-primary" id="cancel-auto-assign" data-dismiss="modal">Cancel
+                    <button type="button" class="btn btn-primary" id="confirm-auto-assign">Yes</button>
+                    <button type="button" class="btn btn-danger" id="cancel-auto-assign" data-dismiss="modal">Cancel
                     </button>
                 </form>
             </div>

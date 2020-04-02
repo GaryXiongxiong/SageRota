@@ -34,7 +34,7 @@ $end_date = date("Y-m-d", strtotime("$start_date  +56  days "));//default 9 week
 $timeSlot2 = getAWeekTimeSlot($end_date, 1);
 $weekEndDate = $timeSlot2[1]; */
 
-$query = $conn->prepare("SELECT id,staff_sid,first_name,last_name,start_time,end_time,location,remark FROM shift left join staff on staff_sid=sid where start_time >= ? and end_time <= ?");
+$query = $conn->prepare("SELECT id,staff_sid,first_name,last_name,start_time,end_time,location,remark FROM shift left join staff on staff_sid=sid where start_time >= ? and end_time <= ? order by start_time");
 $query->bind_param("ss", $start_date, $end_date);
 $query->execute();
 $result = $query->get_result()->fetch_all();
