@@ -146,13 +146,48 @@ $(document).ready(function () {
         })
     })
 
+    $("#confirm-auto-assign").click(function () {
+        //Define start date and end date
+        let startDate = new Date($(".datepicker_start").datepicker('getDate'));
+        let endDate = new Date($(".datepicker_end").datepicker('getDate'));
+
+        if(endDate<startDate)
+        {
+            //loadContent();
+            $("#auto-assign-shift-popup").modal("hide");
+            alert("Error\nEnd date cannot be earlier than start date!\nTry again");
+            return;
+
+        }
+        // Get first and last mondays of the selected period
+        let firstMonday=getPreviousMonday(startDate);
+        let lastMonday=getPreviousMonday(endDate+7*86400000); //7 here because because we need a number that is greater than the end of lastMonday's week and less than the end of the next week
+
+        $.ajax({
+            url: "api/auto_assign.php",
+            method: "POST",
+            dataType: "json",
+            //async: false,
+            data: {start_date: firstMonday.format("YYYY-MM-DD"), end_date: lastMonday.format("YYYY-MM-DD")},
+            beforeSend: function () {
+                showLoading();
+            },
+            success: function (result) {
+                let status=result.status;
+                console.log(status);
+            },
+        });
+
+        loadContent();
+        $("#auto-assign-shift-popup").modal("hide");
+    });
 });
 
 function loadStartDate() {
     let startDate = getUrlParam("start_date");
     let date;
     let dayOfWeek;
-    if (startDate == null) {
+    if (startDate === null||startDate==="") {
         date = new Date();
     } else {
         date = new Date(startDate);
@@ -463,6 +498,3 @@ $("#confirm-auto-assign").click(function () {
         });
     }  
 
-        loadContent();
-        $("#auto-assign-shift-popup").modal("hide");
-    });
