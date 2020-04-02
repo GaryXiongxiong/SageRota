@@ -19,7 +19,7 @@ $end_date = $_REQUEST['end_date'];
 
 $rr= ( strtotime($end_date) - strtotime($start_date)) ;
 // calculate number of weeks that contain and lie between start and end dates
- $numberOfDays = ( strtotime($end_date) - strtotime($start_date))/86400;
+$numberOfDays = ( strtotime($end_date) - strtotime($start_date))/86400;
 $numberOfWeeks = (($numberOfDays-$numberOfDays%7)/7+1);
 
 // Define array of weeks, every week is represented by its start date
@@ -41,79 +41,32 @@ else{
     $sdate = $start_date;
     $edate=date('Y-m-d', strtotime($end_date . ' + 7 days'));
     // Get all registered shifts in the selected period
-    $oldShifts = getAllShifts($conn,$sdate, $edate);
+    deleteShifts($conn,$sdate, $edate);
     
-    // Get empty shifts in the selected period, each shift represented by its start date
-    $emptyWeeks=array_values(array_diff($allWeeks,array_column($oldShifts, "start_time")));
-    if(count($emptyWeeks)<1) 
-    {
-        $flag = "fail";
-    }
-    else{
-        if(count($oldShifts)>0)
-        {
-            $a = array_column($oldShifts, "staff_sid");
-            $availableStaff=array_count_values($a);
-            $max= max($availableStaff);
-            $dd=array_keys($availableStaff);
-
-            $finalStaffList=array_values(array_diff($staffs,array_keys($availableStaff)));
-
-            for($i=1;$i<$max;$i++)
-            {
-                for($j=0;$j<count($staffs);$j++)
-                {
-                    if (array_key_exists($staffs[$j],$availableStaff))
-                    {
-                        if($availableStaff[$staffs[$j]]<=$i)
-                        {
-                            array_push($finalStaffList,$staffs[$j]);   
-                        }
-                    }
-                    else{
-                        array_push($finalStaffList,$staffs[$j]);
-                    }
-                }
-            }
-        }
-        else{
-            $finalStaffList=$staffs;
-        }
         $sql_in = "INSERT INTO shift(staff_sid, start_time, end_time) 
             VALUES";
             $j=0;
             $check=false;
-        for($i=0;$i<count($emptyWeeks);$i++)
+        for($i=0;$i<count($allWeeks);$i++)
         {
-            $sd=date('Ymd', strtotime($emptyWeeks[$i]));
-            $ed = date('Ymd', strtotime($emptyWeeks[$i] . ' + 6 days'));
-            if($i!=count($emptyWeeks)-1)
+            $sd=date('Ymd', strtotime($allWeeks[$i]));
+            $ed = date('Ymd', strtotime($allWeeks[$i] . ' + 6 days'));
+            if($i!=count($allWeeks)-1)
             {
-                $text="($finalStaffList[$j],$sd,$ed),";
+                $text="($staffs[$j],$sd,$ed),";
             }
             else{
-                $text="($finalStaffList[$j],$sd,$ed)";
+                $text="($staffs[$j],$sd,$ed)";
             }
             
             $sql_in = "$sql_in$text";
             $j++;
-            if($check)
-            {
-                if($j>=count($finalStaffList)) 
+            if($j>=count($staffs)) 
                 $j=0;
-            }
-            else if($j>=count($finalStaffList))
-            {
-                $finalStaffList=$staffs;
-                $j=0;
-                $check=true;
-            }
         }
         
         if ($conn->query($sql_in) === TRUE) {
             $flag="success";
-
-            //$newShifts= getAllShifts($conn,$sdate, $edate);
 
             $sdate = date('Y-m-d', strtotime($sdate . ' - 7 days'));
             $edate2=$edate;
@@ -165,7 +118,7 @@ else{
                 if($cc2[$c2[$i]]==$cc2[$c2[$i+1]])//if $c2[$i].staff==$c2[$i+1].staff
                 {
                     // if week[i] is one of the empty weeks (before auto assigning staff)
-                    if(in_array($c2[$i],$emptyWeeks))
+                    if(in_array($c2[$i],$allWeeks))
                     {
                         while($cc2[$c2[$i]]==$cc2[$c2[$i+1]] && $check)
                         {
@@ -202,7 +155,7 @@ else{
                         }                         
                     }
                     // if week[i+1] is one of the empty weeks (before auto assigning staff)
-                    elseif(in_array($c2[$i+1],$emptyWeeks))
+                    elseif(in_array($c2[$i+1],$allWeeks))
                     {
                         while($cc2[$c2[$i]]==$cc2[$c2[$i+1]] && $check)
                         {
@@ -240,9 +193,9 @@ else{
             }
 
         } else {
-            $flag="fail";
+            $flag = $conn->error;
         }
-    }
+    
 }
 
 
@@ -311,6 +264,17 @@ function getAllShifts($conn,$start_date, $end_date){
 //=========================================================================
 function updateShift($conn,$start_date, $staff_sid){
     $query = $conn->prepare("UPDATE timetable.shift SET staff_sid=$staff_sid WHERE start_time=$start_date;");
+    $query->execute();
+    //$result = $query->get_result()->fetch_all();
+    $query->close();
+}
+
+//=========================================================================
+// Function to delete all shifts
+//=========================================================================
+function deleteShifts($conn,$start_date, $end_date){
+    $query = $conn->prepare("DELETE FROM timetable.shift where start_time >= ? and end_time <= ?");
+    $query->bind_param("ss", $start_date, $end_date);
     $query->execute();
     //$result = $query->get_result()->fetch_all();
     $query->close();

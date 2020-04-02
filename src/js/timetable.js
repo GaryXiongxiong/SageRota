@@ -409,7 +409,7 @@ function bindAutoAssignEvent() {
     });
 } 
 
-$("#confirm-auto-assign").click(function () {
+$("#confirm-auto-assign").click(function () {    
     //Define start date and end date
     let startDate = new Date($(".datepicker_start").datepicker('getDate'));
     let endDate = new Date($(".datepicker_end").datepicker('getDate'));
@@ -424,22 +424,44 @@ $("#confirm-auto-assign").click(function () {
     }
     // Get first and last mondays of the selected period
     let firstMonday=getPreviousMonday(startDate);
-    let lastMonday=getPreviousMonday(endDate+7*86400000); //7 here because because we need a number that is greater than the end of lastMonday's week and less than the end of the next week
- 
-    $.ajax({
-        url: "api/auto_assign.php",
-        method: "POST",
-        dataType: "json",
-        //async: false,
-        data: {start_date: firstMonday.format("YYYY-MM-DD"), end_date: lastMonday.format("YYYY-MM-DD")},
-         beforeSend: function () {
-             showLoading();
-         },
-        success: function (result) {
-            let status=result.status;
-            console.log(status);
-        },
-    });
+    // let dddd=getPreviousMonday(endDate);
+    // dddd.setDate(dddd.getDate() + 7);
+    let lastMonday=getPreviousMonday(endDate); 
+
+    if(document.getElementById('replace_shifts').checked)
+    {
+        $.ajax({
+            url: "api/auto_assign_replace.php",
+            method: "POST",
+            dataType: "json",
+            //async: false,
+            data: {start_date: firstMonday.format("YYYY-MM-DD"), end_date: lastMonday.format("YYYY-MM-DD")},
+             beforeSend: function () {
+                 showLoading();
+             },
+            success: function (result) {
+                let status=result.status;
+                console.log(status);
+            },
+        });
+    }
+    else
+    {
+        $.ajax({
+            url: "api/auto_assign.php",
+            method: "POST",
+            dataType: "json",
+            //async: false,
+            data: {start_date: firstMonday.format("YYYY-MM-DD"), end_date: lastMonday.format("YYYY-MM-DD")},
+             beforeSend: function () {
+                 showLoading();
+             },
+            success: function (result) {
+                let status=result.status;
+                console.log(status);
+            },
+        });
+    }  
 
         loadContent();
         $("#auto-assign-shift-popup").modal("hide");
