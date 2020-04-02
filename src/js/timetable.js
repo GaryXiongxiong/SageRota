@@ -442,6 +442,59 @@ function bindAutoAssignEvent() {
     $(".btn-shift-auto-assign").click(function () {
         $("#auto-assign-shift-popup").modal("show");
     });
-}
+} 
 
+$("#confirm-auto-assign").click(function () {    
+    //Define start date and end date
+    let startDate = new Date($(".datepicker_start").datepicker('getDate'));
+    let endDate = new Date($(".datepicker_end").datepicker('getDate'));
+
+    if(endDate<startDate)
+    {
+        //loadContent();
+        $("#auto-assign-shift-popup").modal("hide");
+        alert("Error\nEnd date cannot be earlier than start date!\nTry again");
+        return;
+
+    }
+    // Get first and last mondays of the selected period
+    let firstMonday=getPreviousMonday(startDate);
+    // let dddd=getPreviousMonday(endDate);
+    // dddd.setDate(dddd.getDate() + 7);
+    let lastMonday=getPreviousMonday(endDate); 
+
+    if(document.getElementById('replace_shifts').checked)
+    {
+        $.ajax({
+            url: "api/auto_assign_replace.php",
+            method: "POST",
+            dataType: "json",
+            //async: false,
+            data: {start_date: firstMonday.format("YYYY-MM-DD"), end_date: lastMonday.format("YYYY-MM-DD")},
+             beforeSend: function () {
+                 showLoading();
+             },
+            success: function (result) {
+                let status=result.status;
+                console.log(status);
+            },
+        });
+    }
+    else
+    {
+        $.ajax({
+            url: "api/auto_assign.php",
+            method: "POST",
+            dataType: "json",
+            //async: false,
+            data: {start_date: firstMonday.format("YYYY-MM-DD"), end_date: lastMonday.format("YYYY-MM-DD")},
+             beforeSend: function () {
+                 showLoading();
+             },
+            success: function (result) {
+                let status=result.status;
+                console.log(status);
+            },
+        });
+    }  
 
