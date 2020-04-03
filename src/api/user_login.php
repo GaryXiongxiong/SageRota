@@ -15,7 +15,7 @@ $conn->close();
 
 $flag = "fail";
 $sid = 0;
-$level = 0;
+$level = -1;
 $name = "";
 if (count($result) == 1) {
     $sid = $result[0][0];
