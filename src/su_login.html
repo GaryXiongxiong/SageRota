@@ -20,7 +20,6 @@
                     <br>
                     <form id="login-form" action="" method="post" onsubmit="return false">
                         <span  class="text-primary"><i class="fas fa-user-shield"></i> Logging in as <strong>Supervisor</strong></span>
-                        <span class="text-danger invisible" id="fail-notice">E-mail or password is incorrect.</span>
                         <div class="form-row mt-3">
                             <input type="email" class="form-control" placeholder="E-mail" id="e_mail"
                                    name="e_mail" required>
@@ -28,6 +27,7 @@
                         <div class="form-row mt-3">
                             <input type="password" class="form-control" placeholder="Password" id="pwd" name="pwd" required>
                         </div>
+                        <span class="text-danger invisible" id="fail-notice">E-mail or password is incorrect.</span>
                         <div class="form-row mt-3">
                             <button type="submit" class="btn btn-outline-primary col mr-2">Login</button>
                             <a href="login.html" class="btn btn-outline-secondary col mt-1 mt-md-0">Staff login</a>
