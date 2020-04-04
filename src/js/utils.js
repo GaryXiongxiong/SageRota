@@ -84,7 +84,7 @@ function loadNav(index,auth){
             if(index>=0){
                 $(".nav-item").eq(index).children("a").addClass("active");
             }
-            $(".user-center-link").text(auth.name).attr("href","#");
+            $(".user-center-link").text(auth.name);
             $(".logout-btn").click(function () {
                 $.removeCookie("PHPSESSID",{path:"/"});
                 window.location.href="login.html";
