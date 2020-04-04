@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sage Rota - Timetable</title>
+    <link rel="stylesheet" href="bootstrap/bootstrap_customized.css">
+    <link rel="stylesheet" href="lib/jquery.datepicker.min.css">
+    <link rel="stylesheet" href="lib/bootstrap-select.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!--Navigate bar-->
+<navigation></navigation>
+<!--Navigate bar end-->
+<!--Page content start-->
+<div class="container" id="main-container">
+    <!--    staff List-->
+    <div class="container-fluid page-content" id="page-content">
+        <h1 class="main_title">Timetable</h1>
+        <HR>
+        <div class="btn-group mb-2" role="group" aria-label="Basic example">
+            <a class="btn btn-primary" href="#">All shifts</a>
+            <a class="btn btn-light" href="#">Mine shifts</a>
+        </div>
+        <div class="row timetable-list" id="timetable-list">
+        </div>
+        <!--Pagination start-->
+        <div class="row justify-content-end pagination-row mt-2">
+            <ul class="pagination" id="pagination">
+                <li class="page-item"><a class="page-link" href="#" id="previous-page">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="?">Today</a></li>
+                <li class="page-item"><a class="page-link" href="#" id="next-page">Next</a></li>
+            </ul>
+            <div class="col-md-3 pr-0">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control datepicker" placeholder="Date" aria-label="Date"
+                           aria-describedby="goto-btn">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button" id="goto-btn">Goto</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Pagination end-->
+    </div>
+</div>
+<!--Page content end-->
+
+<!--Loading Modal start-->
+<div class="modal" data-backdrop="static" role="dialog" id="loading-popup">
+    <div class="modal-dialog modal-sm">
+        <button class="btn btn-primary loading" type="button" disabled>
+            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+            Loading...
+        </button>
+    </div>
+</div>
+<!--Loading Modal end-->
+</body>
+<script src="https://kit.fontawesome.com/9b17a9fd41.js" crossorigin="anonymous"></script>
+<script src="lib/jquery-3.4.1.min.js"></script>
+<script src="bootstrap/bootstrap.bundle.js"></script>
+<script src="lib/js-date-format.min.js"></script>
+<script src="lib/jquery.datepicker.min.js"></script>
+<script src="lib/jquery.cookie.js"></script>
+<script src="lib/bootstrap-select.min.js"></script>
+<script src="js/user_timetable.js"></script>
+<script src="js/utils.js"></script>
+</html>

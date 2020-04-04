@@ -10,20 +10,20 @@ $conninfo = json_decode($datainfo);
 $conn = new mysqli($conninfo->{"host"}, $conninfo->{"user"}, $conninfo->{"password"}, $conninfo->{"dbname"}, $conninfo->{"port"});
 
 $itemsPerPage = 9;
-$query = $conn->prepare("SELECT count(*) as count FROM staff ");
+$query = $conn->prepare("SELECT count(*) as count FROM feedback ");
 $query->execute();
 $result = $query->get_result()->fetch_all();
 $query->close();
 $conn->close();
 if (count($result) == 0) {
     $pageCount = -1;
-    $staffCount = -1;
+    $fbCount = -1;
 } else {
-    $staffCount = $result[0][0];
-    $pageCount = ceil($staffCount / $itemsPerPage);
+    $fbCount = $result[0][0];
+    $pageCount = ceil($fbCount / $itemsPerPage);
 }
 $resDict = array(
-    "staffCount" => $staffCount,
+    "fbCount" => $fbCount,
     "pageCount" => $pageCount
 );
 $resJson = json_encode($resDict);

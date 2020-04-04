@@ -62,3 +62,6 @@
 .text-faded{
     color: #a9b7c4;
 }
+.feedback .card-header{
+    border-bottom: 0;
+}

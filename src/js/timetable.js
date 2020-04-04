@@ -144,43 +144,81 @@ $(document).ready(function () {
                     "</div>");
             }
         })
-    })
+    });
 
     $("#confirm-auto-assign").click(function () {
         //Define start date and end date
         let startDate = new Date($(".datepicker_start").datepicker('getDate'));
         let endDate = new Date($(".datepicker_end").datepicker('getDate'));
 
-        if(endDate<startDate)
-        {
+        if (endDate < startDate) {
             //loadContent();
             $("#auto-assign-shift-popup").modal("hide");
-            alert("Error\nEnd date cannot be earlier than start date!\nTry again");
+            $(".main_title").after("<div class='alert alert-danger alert-dismissible fade show' role='alert'>" +
+                "  <strong>End date cannot be earlier than start date!</strong>" +
+                "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+                "<span aria-hidden='true'>&times;</span> " +
+                "</button> " +
+                "</div>");
             return;
 
         }
         // Get first and last mondays of the selected period
-        let firstMonday=getPreviousMonday(startDate);
-        let lastMonday=getPreviousMonday(endDate+7*86400000); //7 here because because we need a number that is greater than the end of lastMonday's week and less than the end of the next week
+        let firstMonday = getPreviousMonday(startDate);
 
-        $.ajax({
-            url: "api/auto_assign.php",
-            method: "POST",
-            dataType: "json",
-            //async: false,
-            data: {start_date: firstMonday.format("YYYY-MM-DD"), end_date: lastMonday.format("YYYY-MM-DD")},
-            beforeSend: function () {
-                showLoading();
-            },
-            success: function (result) {
-                let status=result.status;
-                console.log(status);
-            },
-        });
+        let lastMonday = getPreviousMonday(endDate);
 
-        loadContent();
-        $("#auto-assign-shift-popup").modal("hide");
+        if (document.getElementById('replace_shifts').checked) {
+            $.ajax({
+                url: "api/auto_assign_replace.php",
+                method: "POST",
+                dataType: "json",
+                //async: false,
+                data: {start_date: firstMonday.format("YYYY-MM-DD"), end_date: lastMonday.format("YYYY-MM-DD")},
+                beforeSend: function () {
+                    showLoading();
+                },
+                success: function (result) {
+                    let status = result.status;
+                    console.log(status);
+                    $("#auto-assign-shift-popup").modal("hide");
+                    removeLoading();
+                    loadContent();
+                    $(".main_title").after("<div class='alert alert-success alert-dismissible fade show' role='alert'>" +
+                        "  <strong>Given period has been filled</strong>" +
+                        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+                        "<span aria-hidden='true'>&times;</span> " +
+                        "</button> " +
+                        "</div>");
+                },
+            });
+        } else {
+            $.ajax({
+                url: "api/auto_assign.php",
+                method: "POST",
+                dataType: "json",
+                //async: false,
+                data: {start_date: firstMonday.format("YYYY-MM-DD"), end_date: lastMonday.format("YYYY-MM-DD")},
+                beforeSend: function () {
+                    showLoading();
+                },
+                success: function (result) {
+                    let status = result.status;
+                    console.log(status);
+                    $("#auto-assign-shift-popup").modal("hide");
+                    removeLoading();
+                    loadContent();
+                    $(".main_title").after("<div class='alert alert-success alert-dismissible fade show' role='alert'>" +
+                        "  <strong>Given period has been filled</strong>" +
+                        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+                        "<span aria-hidden='true'>&times;</span> " +
+                        "</button> " +
+                        "</div>");
+                },
+            });
+        }
     });
+
 });
 
 function loadStartDate() {
@@ -215,7 +253,7 @@ function loadGoto() {
     });
     $("#goto-btn").click(function () {
         window.location.href = '?start_date=' + $(".datepicker").datepicker('getDate');
-    })
+    });
     $(".datepicker_start").datepicker({
         defaultValue: new Date()});
     $(".datepicker_end").datepicker({
@@ -252,8 +290,8 @@ function loadContent() {
             bindAssignEvent();
             bindDeleteEvent();
             bindEditEvent();
-            removeLoading();
             bindAutoAssignEvent();
+            removeLoading();
         }
     });
 }
@@ -268,7 +306,7 @@ function appendShift(shift) {
             + ' ' + new Date(shift.end_time).format("DS MMM") + '</h5>\n' +
             '                        <p>\n' +
             '                            <i class="fas fa-user"></i>\n' +
-            '                            <strong>' + shift.staff_first_name + ' ' + shift.staff_last_name + '</strong>\n' +
+            '                            <button class="btn btn-link p-0 staff-popover">' + shift.staff_first_name + ' ' + shift.staff_last_name + '</button>\n' +
             '                            <br>\n' +
             '                            <br>\n' +
             '                        </p>\n' +
@@ -285,7 +323,7 @@ function appendShift(shift) {
             + ' ' + new Date(shift.end_time).format("DS MMM") + '</h5>\n' +
             '                        <p>\n' +
             '                            <i class="fas fa-user"></i>\n' +
-            '                            <strong>' + shift.staff_first_name + ' ' + shift.staff_last_name + '</strong>\n' +
+            '                            <button class="btn btn-link p-0 staff-popover">' + shift.staff_first_name + ' ' + shift.staff_last_name + '</button>\n' +
             '                            <br>\n' +
             '                            <i class="fas fa-map-marked-alt"></i>\n' +
             '                            ' + shift.location + '\n' +
@@ -297,7 +335,24 @@ function appendShift(shift) {
             '                </div>\n' +
             '            </div>';
     }
-    $("#timetable-list").append(shiftContent)
+    $("#timetable-list").append(shiftContent);
+    $("[data-id='"+shift.id+"']").find(".staff-popover")
+        .attr("data-toggle","popover")
+        .attr("title",shift.staff_first_name+" "+shift.staff_last_name)
+        .attr("data-html",true)
+        .attr("data-content","" +
+            "                            <i class='fas fa-phone-square-alt'></i>" +
+            "                            " + shift.phone_number +
+            "                            <br>" +
+            "                            <i class='fas fa-envelope-square'></i>" +
+            "                            " + shift.e_mail +
+            "                            <br>" +
+            "                            <i class='fas fa-briefcase'></i>" +
+            "                            " + shift.job_title
+        )
+        .attr("data-trigger","focus")
+        .attr("data-placement","bottom");
+    $('[data-toggle="popover"]').popover();
 }
 
 function appendEmptyShift(date) {
@@ -443,5 +498,4 @@ function bindAutoAssignEvent() {
         $("#auto-assign-shift-popup").modal("show");
     });
 }
-
 

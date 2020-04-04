@@ -57,3 +57,16 @@ create table if not exists announcement
         foreign key (suid) references supervisor (SuId)
             on update cascade on delete set null
 );
+
+create table if not exists feedback
+(
+    fid int auto_increment
+        primary key,
+    from_sid int not null,
+    content text not null,
+    unread tinyint(1) default 1 null,
+    timestamp timestamp default CURRENT_TIMESTAMP null,
+    constraint feedback_staff_sid_fk
+        foreign key (from_sid) references staff (sid)
+            on update cascade on delete cascade
+);
