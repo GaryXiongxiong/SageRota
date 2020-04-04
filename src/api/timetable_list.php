@@ -34,7 +34,7 @@ $end_date = date("Y-m-d", strtotime("$start_date  +56  days "));//default 9 week
 $timeSlot2 = getAWeekTimeSlot($end_date, 1);
 $weekEndDate = $timeSlot2[1]; */
 
-$query = $conn->prepare("SELECT id,staff_sid,first_name,last_name,start_time,end_time,location,remark FROM shift left join staff on staff_sid=sid where start_time >= ? and end_time <= ? order by start_time");
+$query = $conn->prepare("SELECT id,staff_sid,first_name,last_name,start_time,end_time,location,remark,e_mail,phone_number,job_title,gender FROM shift left join staff on staff_sid=sid where start_time >= ? and end_time <= ? order by start_time");
 $query->bind_param("ss", $start_date, $end_date);
 $query->execute();
 $result = $query->get_result()->fetch_all();
@@ -53,7 +53,12 @@ if (count($result) == 0) {
             "start_time" => $result[$i][4],
             "end_time" => $result[$i][5],
             "location" => $result[$i][6],
-            "remark" => $result[$i][7]);
+            "remark" => $result[$i][7],
+            "e_mail" => $result[$i][8],
+            "phone_number" => $result[$i][9],
+            "job_title" => $result[$i][10],
+            "gender" => $result[$i][11],
+            );
         $shifts[] = $shift;
     }
 }
