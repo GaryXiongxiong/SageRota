@@ -4,7 +4,6 @@ $(document).ready(function () {
         window.location.href = "su_login.html";
     }
     loadNav(2, auth);
-    CKEDITOR.replace("article_content");
     loadContent();
 
     $("#announcement-editor").submit(function (e) {
@@ -53,6 +52,10 @@ $(document).ready(function () {
 });
 
 function loadContent() {
+    showLoading();
+    CKEDITOR.replace("article_content",{
+        height: '30em'
+    });
     $.ajax({
         url:"api/get_announcement.php",
         method: "GET",
@@ -62,6 +65,7 @@ function loadContent() {
                 $("#article_title").val(result.title);
                 CKEDITOR.instances.article_content.setData(result.content);
             }
+            removeLoading();
         }
     });
 }
