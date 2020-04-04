@@ -3,7 +3,7 @@ $(document).ready(function () {
     if (auth.level !== 1) {
         window.location.href = "su_login.html";
     }
-    loadNav(3, auth);
+    loadNav(4, auth);
     loadContent();
 
     $("#edit_name").click(function () {
@@ -58,11 +58,12 @@ $(document).ready(function () {
         let curPwd = $("#reset_pwd_form #old_pwd").val();
         let newPwd = $("#reset_pwd_form #new_pwd").val();
         let cfmNewPwd = $("#reset_pwd_form #cfm_pwd").val();
+        let unconfirmedNotice = $("#unconfirmed-notice");
         if (newPwd !== cfmNewPwd) {
-            $("#unconfirmed-notice").removeClass("invalid-feedback");
+            unconfirmedNotice.removeClass("invalid-feedback");
             return;
         }
-        $("#unconfirmed-notice").addClass("invalid-feedback");
+        unconfirmedNotice.addClass("invalid-feedback");
         $.ajax({
             url: "api/su_reset_pwd.php",
             method: "post",
@@ -70,7 +71,7 @@ $(document).ready(function () {
             data:{old_pwd: sha256(curPwd),new_pwd:sha256(newPwd)},
             success: function (result) {
                 if(result.result==="success"){
-                    $("#unconfirmed-notice").addClass("invalid-feedback");
+                    unconfirmedNotice.addClass("invalid-feedback");
                     alert("Password has been updated, please re-login.");
                     $.removeCookie("PHPSESSID", {path: "/"});
                     window.location.href = "su_login.html";
