@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback</title>
+    <link rel="stylesheet" href="bootstrap/bootstrap_customized.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<navigation></navigation>
+
+<div class="container page-content pb-3">
+    <h1 id="name" class="main_title">Feedback</h1>
+    <hr>
+    <div id="feedback-list">
+<!--    <div class="card feedback mb-3" id="fb-1">-->
+<!--        <div class="card-header">-->
+<!--            <button class="btn btn-link feedback-btn" type="button" data-toggle="collapse"-->
+<!--                    data-target="#fb-1 .collapse">-->
+<!--                Yixiong Jiang 3th Feb 3:20PM-->
+<!--                <span class="badge badge-pill badge-primary unread-badge">Unread</span>-->
+<!--            </button>-->
+<!--        </div>-->
+<!--        <div class="collapse">-->
+<!--            <div class="card-body fb-content">-->
+<!--                <p>-->
+<!--                    <i class="fas fa-phone-square-alt"></i>-->
+<!--                    +44 07579859794-->
+<!--                    <br>-->
+<!--                    <i class="fas fa-envelope-square"></i>-->
+<!--                    i@jiangyixiong.top-->
+<!--                    <br>-->
+<!--                    <i class="fas fa-briefcase"></i>-->
+<!--                    Product Manager-->
+<!--                </p>-->
+<!--                <p class="mb-0">-->
+<!--                    I cannot attend my next shift, could please arrange another for this shift?<br>Thanks-->
+<!--                </p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+    </div>
+    <!--Pagination start-->
+    <div class="row justify-content-end pagination-row">
+        <ul class="pagination" id="pagination">
+            <li class="page-item"><a class="page-link" href="#" id="previous-page">Previous</a></li>
+            <!--                <li class="page-item active"><a class="page-link" href="#">1</a></li>-->
+            <!--                <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+            <li class="page-item"><a class="page-link" href="#" id="next-page">Next</a></li>
+        </ul>
+    </div>
+    <!--Pagination end-->
+</div>
+
+<div class="modal" data-backdrop="static" role="dialog" id="loading-popup">
+    <div class="modal-dialog modal-sm">
+        <button class="btn btn-primary loading" type="button" disabled>
+            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+            Loading...
+        </button>
+    </div>
+</div>
+
+</body>
+<script src="https://kit.fontawesome.com/9b17a9fd41.js" crossorigin="anonymous"></script>
+<script src="lib/jquery-3.4.1.min.js"></script>
+<script src="lib/jquery.cookie.js"></script>
+<script src="lib/js-date-format.min.js"></script>
+<script src="bootstrap/bootstrap.bundle.js"></script>
+<script src="js/feedback.js"></script>
+<script src="js/utils.js"></script>
+</html>

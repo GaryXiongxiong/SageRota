@@ -63,11 +63,19 @@ function loadNav(index,auth){
             if(index>=0){
                 $(".nav-item").eq(index).children("a").addClass("active");
             }
-            $(".user-center-link").text(auth.name);
-            $(".user-center-link").attr("href","su_profile.html");
+            $(".user-center-link").text(auth.name).attr("href","su_profile.html");
             $(".logout-btn").click(function () {
                 $.removeCookie("PHPSESSID",{path:"/"});
                 window.location.href="su_login.html";
+            });
+            $.ajax({
+                url:"api/unread_feedback_count.php",
+                method:"POST",
+                datatype:"json",
+                success: function (result) {
+                    let unread = result.unread;
+                    $("[href='feedback.html']").append('<span class="badge badge-pill badge-primary ml-1">'+unread+'</span>\n');
+                }
             });
         })
     }
@@ -76,8 +84,7 @@ function loadNav(index,auth){
             if(index>=0){
                 $(".nav-item").eq(index).children("a").addClass("active");
             }
-            $(".user-center-link").text(auth.name);
-            $(".user-center-link").attr("href","#");
+            $(".user-center-link").text(auth.name).attr("href","#");
             $(".logout-btn").click(function () {
                 $.removeCookie("PHPSESSID",{path:"/"});
                 window.location.href="login.html";
@@ -87,7 +94,7 @@ function loadNav(index,auth){
 }
 
 function randomPwd(){
-    let charset = "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678"
+    let charset = "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678";
     let length = charset.length;
     let rndPwd="";
     for(let i =0;i<8;i++){
