@@ -26,7 +26,7 @@ if (count($result) == 0) {
     $pageCount = ceil($shiftCount / $itemsPerPage);
 }
 $resDict = array(
-    "fbCount" => $shiftCount,
+    "shiftCount" => $shiftCount,
     "pageCount" => $pageCount
 );
 $resJson = json_encode($resDict);

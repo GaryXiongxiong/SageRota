@@ -20,27 +20,19 @@
         <h1 class="main_title">Timetable</h1>
         <HR>
         <div class="btn-group mb-2" role="group" aria-label="Basic example">
-            <a class="btn btn-primary" href="user_timetable.html">All shifts</a>
-            <a class="btn btn-light" href="user_mine_timetable.html">Mine shifts</a>
+            <a class="btn btn-light" href="user_timetable.html">All shifts</a>
+            <a class="btn btn-primary" href="user_mine_timetable.html">Mine shifts</a>
         </div>
         <div class="row timetable-list" id="timetable-list">
         </div>
         <!--Pagination start-->
-        <div class="row justify-content-end pagination-row mt-2">
+        <div class="row justify-content-end pagination-row">
             <ul class="pagination" id="pagination">
                 <li class="page-item"><a class="page-link" href="#" id="previous-page">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="?">Today</a></li>
+                <!--                <li class="page-item active"><a class="page-link" href="#">1</a></li>-->
+                <!--                <li class="page-item"><a class="page-link" href="#">2</a></li>-->
                 <li class="page-item"><a class="page-link" href="#" id="next-page">Next</a></li>
             </ul>
-            <div class="col-md-3 pr-0">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control datepicker" placeholder="Date" aria-label="Date"
-                           aria-describedby="goto-btn">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="button" id="goto-btn">Goto</button>
-                    </div>
-                </div>
-            </div>
         </div>
         <!--Pagination end-->
     </div>
@@ -65,6 +57,6 @@
 <script src="lib/jquery.datepicker.min.js"></script>
 <script src="lib/jquery.cookie.js"></script>
 <script src="lib/bootstrap-select.min.js"></script>
-<script src="js/user_timetable.js"></script>
+<script src="js/user_mine_timetable.js"></script>
 <script src="js/utils.js"></script>
 </html>

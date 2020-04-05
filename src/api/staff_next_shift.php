@@ -11,7 +11,7 @@ $conn = new mysqli($conninfo->{"host"}, $conninfo->{"user"}, $conninfo->{"passwo
 
 $sid = $_REQUEST['sid'];
 
-$query = $conn->prepare("select * from shift where staff_sid =? and start_time> now() order by id limit 1");
+$query = $conn->prepare("select id,staff_sid,start_time,end_time,location,remark,first_name,last_name from shift,staff where staff_sid =? and staff_sid=sid and start_time> now() order by id limit 1");
 $query->bind_param("i", $sid);
 $query->execute();
 $result = $query->get_result()->fetch_all();
@@ -27,7 +27,9 @@ if (count($result) == 0) {
         "start_time" =>$result[0][2],
         "end_time" => $result[0][3],
         "location" => $result[0][4],
-        "remark" => $result[0][5]
+        "remark" => $result[0][5],
+        "first_name"=>$result[0][6],
+        "last_name"=>$result[0][7]
     );
 }
 $shifts = array($shift);

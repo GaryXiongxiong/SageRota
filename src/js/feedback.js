@@ -5,12 +5,13 @@ $(document).ready(function () {
     }
     loadNav(3, auth);
     let page = getUrlParam("p");
-    if (page == null) page = 1;
+    if (page == null||page==="") page = 1;
     loadPages();
     loadContent(page);
 });
 
 function loadContent(page) {
+    $(".feedback").remove();
     $.ajax({
         url: "api/feedback_list.php",
         method: "POST",
@@ -22,6 +23,14 @@ function loadContent(page) {
         success: function (result) {
             let fbList = result.feedback;
             if (fbList != null) {
+                if (fbList.length===0){
+                    $("#feedback-list").append('' +
+                        '<div class="w-100 p-5 text-center feedback">' +
+                        '<h3 class="text-faded">' +
+                        'Empty' +
+                        '</h3>' +
+                        '</div>')
+                }
                 fbList.forEach(function (feedback) {
                     let feedbackContent =
                         '<div class="card feedback mb-3" id="fb-' + feedback.fid + '">\n' +
@@ -52,12 +61,12 @@ function loadContent(page) {
                     if (feedback.unread === 1) {
                         $("#fb-" + feedback.fid + " .feedback-btn").append('<span class="badge badge-pill badge-primary unread-badge">Unread</span>');
                     }
-                    removeLoading();
                 })
             } else {
                 console.log("Can not get feedback list")
             }
             bindReadEvent();
+            removeLoading();
         }
     });
 

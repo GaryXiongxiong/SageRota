@@ -178,7 +178,36 @@ function loadContent(auth) {
                 $("#cur-phone").text(shift.staff_phone_number);
                 $("#cur-title").text(shift.staff_job_title);
             } else {
-                $("#cur-staff").text("Currently None On-Call").addClass("text-secondary").siblings().remove();
+                $("#cur-staff").addClass("text-secondary").siblings().remove();
+            }
+            removeLoading()
+        }
+    });
+    // Load Next Shift
+    $.ajax({
+        url: "api/staff_next_shift.php",
+        method: "POST",
+        dataType: "json",
+        data: {sid: auth.sid},
+        success: function (result) {
+            if (result.result === "success") {
+                let shift = result.shift[0];
+                let curDate = new Date();
+                let nextStartDate = new Date(Date.parse(shift.start_time));
+                let nextEndDate = new Date(Date.parse(shift.end_time));
+                let weeks = Math.ceil((nextStartDate-curDate)/(1000*60*60*24*7));
+
+                $("#next-shift-count").text("In "+((weeks===1)?"Next Week":(weeks+" Weeks")));
+                $("#next-shift-date").text(nextStartDate.format('DS MMM')+" - "+nextEndDate.format('DS MMM'));
+                $("#next-shift-name strong").text(shift.first_name+" "+shift.last_name);
+                if(shift.location===null||shift.location===""){
+                    $("#next-shift-location").remove();
+                }
+                else{
+                    $("#next-shift-location").append(shift.location);
+                }
+            } else {
+                $("#next-shift-count").addClass("text-secondary").siblings().remove();
             }
             removeLoading()
         }
