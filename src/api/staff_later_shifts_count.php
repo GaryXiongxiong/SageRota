@@ -10,32 +10,24 @@ $conninfo = json_decode($datainfo);
 $conn = new mysqli($conninfo->{"host"}, $conninfo->{"user"}, $conninfo->{"password"}, $conninfo->{"dbname"}, $conninfo->{"port"});
 
 $sid = $_REQUEST['sid'];
+$itemsPerPage = 9;
 
-$query = $conn->prepare("select * from shift where staff_sid =? and start_time> now() order by id limit 1");
-$query->bind_param("i", $sid);
+$query = $conn->prepare("SELECT count(*) as count FROM shift where staff_sid = ? and end_time>now()");
+$query->bind_param("i",$sid);
 $query->execute();
 $result = $query->get_result()->fetch_all();
-
-if (count($result) == 0) {
-    $flag = "fail";
-    $shift = array();
-} else {
-    $flag = "success";
-    $shift = array(
-        "id" => $result[0][0],
-        "staff_sid" => $result[0][1],
-        "start_time" =>$result[0][2],
-        "end_time" => $result[0][3],
-        "location" => $result[0][4],
-        "remark" => $result[0][5]
-    );
-}
-$shifts = array($shift);
-$resDict = array(
-    "result" => $flag,
-    "shift" => $shifts
-);
 $query->close();
 $conn->close();
+if (count($result) == 0) {
+    $pageCount = -1;
+    $shiftCount = -1;
+} else {
+    $shiftCount = $result[0][0];
+    $pageCount = ceil($shiftCount / $itemsPerPage);
+}
+$resDict = array(
+    "fbCount" => $shiftCount,
+    "pageCount" => $pageCount
+);
 $resJson = json_encode($resDict);
-    echo $resJson;
+echo $resJson;
