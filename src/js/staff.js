@@ -10,7 +10,7 @@ $(document).ready(function () {
     //Get page number from url
     let page = getUrlParam("p");
 
-    if (page == null) page = 1;
+    if (page == null||page==="") page = 1;
 
     //Load staff list of page
     loadPages();
@@ -189,6 +189,14 @@ function loadContent(page) {
         success: function (result) {
             let staffs = result.staff;
             if (staffs != null) {
+                if (staffs.length===0){
+                    $("#staff-list").append('' +
+                        '<div class="w-100 p-5 text-center staff-info">' +
+                        '<h3 class="text-faded">' +
+                        'Empty' +
+                        '</h3>' +
+                        '</div>')
+                }
                 staffs.forEach(appendStaff);
             } else {
                 console.log("Can not get staffs")

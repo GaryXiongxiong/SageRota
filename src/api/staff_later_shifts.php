@@ -28,22 +28,22 @@ $query->close();
 $conn->close();
 $shift = array();
 if (count($result) == 0) {
-    $shift = array();
+    $shifts = array();
 } else {
     for ($i = 0; $i < count($result); $i++) {
         $shift = array(
-            "id" => $result[0][0],
-            "staff_sid" => $result[0][1],
-            "first_name" => $result[0][2],
-            "last_name" => $result[0][3],
-            "start_time" => $result[0][4],
-            "end_time" => $result[0][5],
-            "location" => $result[0][6],
-            "remark" => $result[0][7],
-            "e_mail" => $result[0][8],
-            "phone_number" => $result[0][9],
-            "job_title" => $result[0][10],
-            "gender" => $result[0][11]
+            "id" => $result[$i][0],
+            "staff_sid" => $result[$i][1],
+            "first_name" => $result[$i][2],
+            "last_name" => $result[$i][3],
+            "start_time" => $result[$i][4],
+            "end_time" => $result[$i][5],
+            "location" => $result[$i][6],
+            "remark" => $result[$i][7],
+            "e_mail" => $result[$i][8],
+            "phone_number" => $result[$i][9],
+            "job_title" => $result[$i][10],
+            "gender" => $result[$i][11]
         );
         $shifts[] = $shift;
     }
