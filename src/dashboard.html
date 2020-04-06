@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sage Rota</title>
+    <title>Sage Rota - Dashboard</title>
     <link rel="stylesheet" href="bootstrap/bootstrap_customized.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -42,7 +42,7 @@
                     <div class="card-body">
                         <div class="row align-items-center h-100">
                             <div class="col">
-                                <h5 id="cur-staff"></h5>
+                                <h5 id="cur-staff">Currently None On-Call</h5>
                                 <hr>
                                 <p>
                                     <i class="fas fa-phone-square-alt"></i>
@@ -67,15 +67,19 @@
                     <div class="card-body">
                         <div class="row align-items-center h-100">
                             <div class="col">
-                                <h5>In 5 days</h5>
+                                <h5 id="next-shift-count">No shift assign to you yet</h5>
                                 <hr>
-                                <h5>24th Feb - 1st Mar</h5>
+                                <h5 id="next-shift-date"></h5>
                                 <p>
+                                    <span id="next-shift-name">
                                     <i class="fas fa-user"></i>
-                                    <strong>Yixiong Jiang</strong>
+                                    <strong></strong>
+                                    </span>
                                     <br>
+                                    <span id="next-shift-location">
                                     <i class="fas fa-map-marked-alt"></i>
-                                    USB
+
+                                    </span>
                                     <br>
                                 </p>
                             </div>
@@ -89,9 +93,9 @@
                         <h5>Feedback</h5>
                     </div>
                     <div class="card-body">
-                        <form>
+                        <form id="feedback-form">
                             <div class="form-group">
-                                <textarea class="form-control" id="feedback_content" name="content" rows="4" placeholder="Feedback Content"></textarea>
+                                <textarea class="form-control" id="feedback-content" name="content" rows="4" placeholder="Feedback Content"></textarea>
                             </div>
                             <div>
                                 <button type="submit" class="btn btn-primary">Submit</button>

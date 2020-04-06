@@ -1,11 +1,11 @@
 $(document).ready(function () {
     let auth = suAuthenticate();
-    if(auth.level!==1){
-        window.location.href="su_login.html";
+    if (auth.level !== 1) {
+        window.location.href = "su_login.html";
     }
 
 
-    loadNav(1,auth);
+    loadNav(1, auth);
 
     loadContent();
     loadPages();
@@ -144,7 +144,7 @@ $(document).ready(function () {
                     "</div>");
             }
         })
-    })
+    });
 
     $("#confirm-auto-assign").click(function () {
         //Define start date and end date
@@ -298,7 +298,7 @@ function loadStartDate() {
     let startDate = getUrlParam("start_date");
     let date;
     let dayOfWeek;
-    if (startDate === null||startDate==="") {
+    if (startDate === null || startDate === "") {
         date = new Date();
     } else {
         date = new Date(startDate);
@@ -326,11 +326,7 @@ function loadGoto() {
     });
     $("#goto-btn").click(function () {
         window.location.href = '?start_date=' + $(".datepicker").datepicker('getDate');
-    })
-    $(".datepicker_start").datepicker({
-        defaultValue: new Date()});
-    $(".datepicker_end").datepicker({
-            defaultValue: new Date()});
+    });
 }
 
 function loadContent() {
@@ -363,8 +359,8 @@ function loadContent() {
             bindAssignEvent();
             bindDeleteEvent();
             bindEditEvent();
-            removeLoading();
             bindAutoAssignEvent();
+            removeLoading();
         }
     });
 }
@@ -379,7 +375,7 @@ function appendShift(shift) {
             + ' ' + new Date(shift.end_time).format("DS MMM") + '</h5>\n' +
             '                        <p>\n' +
             '                            <i class="fas fa-user"></i>\n' +
-            '                            <strong>' + shift.staff_first_name + ' ' + shift.staff_last_name + '</strong>\n' +
+            '                            <button class="btn btn-link p-0 staff-popover">' + shift.staff_first_name + ' ' + shift.staff_last_name + '</button>\n' +
             '                            <br>\n' +
             '                            <br>\n' +
             '                        </p>\n' +
@@ -396,7 +392,7 @@ function appendShift(shift) {
             + ' ' + new Date(shift.end_time).format("DS MMM") + '</h5>\n' +
             '                        <p>\n' +
             '                            <i class="fas fa-user"></i>\n' +
-            '                            <strong>' + shift.staff_first_name + ' ' + shift.staff_last_name + '</strong>\n' +
+            '                            <button class="btn btn-link p-0 staff-popover">' + shift.staff_first_name + ' ' + shift.staff_last_name + '</button>\n' +
             '                            <br>\n' +
             '                            <i class="fas fa-map-marked-alt"></i>\n' +
             '                            ' + shift.location + '\n' +
@@ -408,7 +404,24 @@ function appendShift(shift) {
             '                </div>\n' +
             '            </div>';
     }
-    $("#timetable-list").append(shiftContent)
+    $("#timetable-list").append(shiftContent);
+    $("[data-id='" + shift.id + "']").find(".staff-popover")
+        .attr("data-toggle", "popover")
+        .attr("title", shift.staff_first_name + " " + shift.staff_last_name)
+        .attr("data-html", true)
+        .attr("data-content", "" +
+            "                            <i class='fas fa-phone-square-alt'></i>" +
+            "                            " + shift.phone_number +
+            "                            <br>" +
+            "                            <i class='fas fa-envelope-square'></i>" +
+            "                            " + shift.e_mail +
+            "                            <br>" +
+            "                            <i class='fas fa-briefcase'></i>" +
+            "                            " + shift.job_title
+        )
+        .attr("data-trigger", "focus")
+        .attr("data-placement", "bottom");
+    $('[data-toggle="popover"]').popover();
 }
 
 function appendEmptyShift(date) {
@@ -532,26 +545,32 @@ function loadCurrentShiftStyle() {
     if (dayOfWeek === 0) dayOfWeek = 7;
     date.setDate(date.getDate() - dayOfWeek + 1);
     let dateStr = date.format("YYYY-MM-DD");
-    $("[data-date=" + dateStr +"]").children(".card").addClass("current-shift");
+    $("[data-date=" + dateStr + "]").children(".card").addClass("current-shift");
 }
 
-//Function to get nearest previous Moday
-function getPreviousMonday(date){
+//Function to get nearest previous Monday
+function getPreviousMonday(date) {
     let currentDate = new Date(date);
-    let day =currentDate.getDay();
-    var z ;
+    let day = currentDate.getDay();
+    var z;
     // The difference between two consecutive days is 86400000 mseconds
-    if (day>0) {
-        z = currentDate - (day-1)*86400000;
-      } else {
-        z = currentDate-6*86400000;
-      }
+    if (day > 0) {
+        z = currentDate - (day - 1) * 86400000;
+    } else {
+        z = currentDate - 6 * 86400000;
+    }
     return new Date(z);
 }
 
 function bindAutoAssignEvent() {
     $(".btn-shift-auto-assign").click(function () {
         $("#auto-assign-shift-popup").modal("show");
+    });
+    $(".datepicker_start").datepicker({
+        weekStart: 1
+    });
+    $(".datepicker_end").datepicker({
+        weekStart: 1
     });
 }
 

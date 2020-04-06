@@ -56,7 +56,7 @@ $(document).ready(function () {
                         "<span aria-hidden='true'>&times;</span> " +
                         "</button> " +
                         "</div>");
-                    loadContent(page);
+                    loadContent();
                 } else if (result.result === "fail") {
                     $("#edit-profile-popup").modal("hide");
                     $("#edit-profile-form")[0].reset();
@@ -80,11 +80,12 @@ $(document).ready(function () {
         let curPwd = $("#reset_pwd_form #old_pwd").val();
         let newPwd = $("#reset_pwd_form #new_pwd").val();
         let cfmNewPwd = $("#reset_pwd_form #cfm_pwd").val();
+        let unconfirmedNotice=$("#unconfirmed-notice");
         if (newPwd !== cfmNewPwd) {
-            $("#unconfirmed-notice").removeClass("invalid-feedback");
+            unconfirmedNotice.removeClass("invalid-feedback");
             return;
         }
-        $("#unconfirmed-notice").addClass("invalid-feedback");
+        unconfirmedNotice.addClass("invalid-feedback");
         $.ajax({
             url: "api/user_reset_pwd.php",
             method: "post",
@@ -92,7 +93,7 @@ $(document).ready(function () {
             data:{old_pwd: sha256(curPwd),new_pwd:sha256(newPwd)},
             success: function (result) {
                 if(result.result==="success"){
-                    $("#unconfirmed-notice").addClass("invalid-feedback");
+                    unconfirmedNotice.addClass("invalid-feedback");
                     alert("Password has been updated, please re-login.");
                     $.removeCookie("PHPSESSID", {path: "/"});
                     window.location.href = "login.html";
@@ -101,6 +102,41 @@ $(document).ready(function () {
                 }
             }
         });
+    });
+
+    $("#feedback-form").submit(function (e) {
+       e.preventDefault();
+       let sid = auth.sid;
+       let content = $("#feedback-content").val();
+       $.ajax({
+           url:"api/add_feedback.php",
+           method:"POST",
+           datatype:"json",
+           data:{sid:sid,content:content},
+           success: function (result) {
+                if(result.result==="success"){
+                    $("#feedback-form")[0].reset();
+                    $(".main_title").after("<div class='alert alert-success alert-dismissible fade show' role='alert'>" +
+                        "  <strong>Feedback has been sent!</strong>" +
+                        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+                        "<span aria-hidden='true'>&times;</span> " +
+                        "</button> " +
+                        "</div>");
+                    loadContent();
+                    $('html,body').animate({ scrollTop: 0 }, 500);
+                }
+                else{
+                    $(".main_title").after("<div class='alert alert-danger alert-dismissible fade show' role='alert'>" +
+                        "  <strong>Feedback sent fail!</strong>" +
+                        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+                        "<span aria-hidden='true'>&times;</span> " +
+                        "</button> " +
+                        "</div>");
+                    loadContent();
+                    $('html,body').animate({ scrollTop: 0 }, 500);
+                }
+           }
+       })
     });
 });
 
@@ -142,7 +178,36 @@ function loadContent(auth) {
                 $("#cur-phone").text(shift.staff_phone_number);
                 $("#cur-title").text(shift.staff_job_title);
             } else {
-                $("#cur-staff").text("Currently None On-Call").addClass("text-secondary").siblings().remove();;
+                $("#cur-staff").addClass("text-secondary").siblings().remove();
+            }
+            removeLoading()
+        }
+    });
+    // Load Next Shift
+    $.ajax({
+        url: "api/staff_next_shift.php",
+        method: "POST",
+        dataType: "json",
+        data: {sid: auth.sid},
+        success: function (result) {
+            if (result.result === "success") {
+                let shift = result.shift[0];
+                let curDate = new Date();
+                let nextStartDate = new Date(Date.parse(shift.start_time));
+                let nextEndDate = new Date(Date.parse(shift.end_time));
+                let weeks = Math.ceil((nextStartDate-curDate)/(1000*60*60*24*7));
+
+                $("#next-shift-count").text("In "+((weeks===1)?"Next Week":(weeks+" Weeks")));
+                $("#next-shift-date").text(nextStartDate.format('DS MMM')+" - "+nextEndDate.format('DS MMM'));
+                $("#next-shift-name strong").text(shift.first_name+" "+shift.last_name);
+                if(shift.location===null||shift.location===""){
+                    $("#next-shift-location").remove();
+                }
+                else{
+                    $("#next-shift-location").append(shift.location);
+                }
+            } else {
+                $("#next-shift-count").addClass("text-secondary").siblings().remove();
             }
             removeLoading()
         }

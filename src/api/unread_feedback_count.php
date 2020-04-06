@@ -9,22 +9,18 @@ $datainfo = file_get_contents("data.json");
 $conninfo = json_decode($datainfo);
 $conn = new mysqli($conninfo->{"host"}, $conninfo->{"user"}, $conninfo->{"password"}, $conninfo->{"dbname"}, $conninfo->{"port"});
 
-$itemsPerPage = 9;
-$query = $conn->prepare("SELECT count(*) as count FROM staff ");
+$query = $conn->prepare("SELECT count(*) as count FROM feedback where unread=1");
 $query->execute();
 $result = $query->get_result()->fetch_all();
 $query->close();
 $conn->close();
 if (count($result) == 0) {
-    $pageCount = -1;
-    $staffCount = -1;
+    $unread = -1;
 } else {
-    $staffCount = $result[0][0];
-    $pageCount = ceil($staffCount / $itemsPerPage);
+    $unread = $result[0][0];
 }
 $resDict = array(
-    "staffCount" => $staffCount,
-    "pageCount" => $pageCount
+    "unread" => $unread,
 );
 $resJson = json_encode($resDict);
 echo $resJson;

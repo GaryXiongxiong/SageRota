@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sage Rota - Loading</title>
+    <link rel="stylesheet" href="bootstrap/bootstrap_customized.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="row align-items-center justify-content-center login-bg">
+    <div class="spinner-grow text-success" style="width: 5rem; height: 5rem;" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+</body>
+<script src="https://kit.fontawesome.com/9b17a9fd41.js" crossorigin="anonymous"></script>
+<script src="lib/jquery-3.4.1.min.js"></script>
+<script src="lib/jquery.cookie.js"></script>
+<script src="bootstrap/bootstrap.bundle.js"></script>
+<script src="js/utils.js"></script>
+<script>
+    if(authenticate().level===0){
+        window.location.href="dashboard.html"
+    }
+    else if(suAuthenticate().level===1){
+        window.location.href="staff.html"
+    }
+    else{
+        window.location.href="login.html"
+    }
+</script>
+</html>

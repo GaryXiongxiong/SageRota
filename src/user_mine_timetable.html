@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sage Rota - Timetable</title>
+    <link rel="stylesheet" href="bootstrap/bootstrap_customized.css">
+    <link rel="stylesheet" href="lib/jquery.datepicker.min.css">
+    <link rel="stylesheet" href="lib/bootstrap-select.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!--Navigate bar-->
+<navigation></navigation>
+<!--Navigate bar end-->
+<!--Page content start-->
+<div class="container" id="main-container">
+    <!--    staff List-->
+    <div class="container-fluid page-content" id="page-content">
+        <h1 class="main_title">Timetable</h1>
+        <HR>
+        <div class="btn-group mb-2" role="group" aria-label="Basic example">
+            <a class="btn btn-light" href="user_timetable.html">All shifts</a>
+            <a class="btn btn-primary" href="user_mine_timetable.html">Mine shifts</a>
+        </div>
+        <div class="row timetable-list" id="timetable-list">
+        </div>
+        <!--Pagination start-->
+        <div class="row justify-content-end pagination-row">
+            <ul class="pagination" id="pagination">
+                <li class="page-item"><a class="page-link" href="#" id="previous-page">Previous</a></li>
+                <!--                <li class="page-item active"><a class="page-link" href="#">1</a></li>-->
+                <!--                <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+                <li class="page-item"><a class="page-link" href="#" id="next-page">Next</a></li>
+            </ul>
+        </div>
+        <!--Pagination end-->
+    </div>
+</div>
+<!--Page content end-->
+
+<!--Loading Modal start-->
+<div class="modal" data-backdrop="static" role="dialog" id="loading-popup">
+    <div class="modal-dialog modal-sm">
+        <button class="btn btn-primary loading" type="button" disabled>
+            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+            Loading...
+        </button>
+    </div>
+</div>
+<!--Loading Modal end-->
+</body>
+<script src="https://kit.fontawesome.com/9b17a9fd41.js" crossorigin="anonymous"></script>
+<script src="lib/jquery-3.4.1.min.js"></script>
+<script src="bootstrap/bootstrap.bundle.js"></script>
+<script src="lib/js-date-format.min.js"></script>
+<script src="lib/jquery.datepicker.min.js"></script>
+<script src="lib/jquery.cookie.js"></script>
+<script src="lib/bootstrap-select.min.js"></script>
+<script src="js/user_mine_timetable.js"></script>
+<script src="js/utils.js"></script>
+</html>
