@@ -173,7 +173,7 @@ $(document).ready(function () {
                 url: "api/auto_assign_replace.php",
                 method: "POST",
                 dataType: "json",
-                //async: false,
+                async: false,
                 data: {start_date: firstMonday.format("YYYY-MM-DD"), end_date: lastMonday.format("YYYY-MM-DD")},
                 beforeSend: function () {
                     showLoading();
@@ -197,7 +197,7 @@ $(document).ready(function () {
                 url: "api/auto_assign.php",
                 method: "POST",
                 dataType: "json",
-                //async: false,
+                async: false,
                 data: {start_date: firstMonday.format("YYYY-MM-DD"), end_date: lastMonday.format("YYYY-MM-DD")},
                 beforeSend: function () {
                     showLoading();
@@ -217,6 +217,79 @@ $(document).ready(function () {
                 },
             });
         }
+        $.ajax({
+            url: "api/check.php",
+            method: "POST",
+            dataType: "json",
+            //async: false,
+            data: {start_date: firstMonday.format("YYYY-MM-DD"), end_date: lastMonday.format("YYYY-MM-DD")},
+            beforeSend: function () {
+                showLoading();
+            },
+            success: function (result) {
+                let shifts = result.shift;
+                //console.log(shifts);
+                let numbers = {2:"two", 3:"three", 4:"four", 5:"five", 6:"six", 7:"seven", 8:"eight", 9:"nine"};
+                let frequency = 2;
+                let check = true;
+                
+                // the following loops for alerting the user if any staff was assigned in two or more consecutive weeks
+                for(let i=shifts.length-1;i>=0;i--)
+                {
+                    let j = i;
+                    let temp_i = i;
+                    while(check && j > 0)
+                    {
+                        // check if the same staff appeared in indexes j and j+1 of the shifts list
+                        if(shifts[j].staff_sid == shifts[j - 1].staff_sid)
+                        {
+                            // increment frequency by one and decrease i and j by one
+                            frequency++;
+                            j--;
+                            i--;
+                        }
+                        else{
+                            check = false;
+                        }
+                    }
+
+                    // the following check and if statement is to check for the condition when there is no 
+                    // need for printing anything at all 
+                    let check2 = false;
+                    if (shifts.length>1)
+                    {
+                        check2 = (temp_i == 0 && shifts[0].staff_sid == shifts[1].staff_sid); 
+                    }
+
+                    // if the condition above is met
+                    if (check2){}
+                    // if the condition above was not met
+                    else{
+                        let staff_frequency;
+                        if(frequency>9)
+                        {
+                            staff_frequency="more than nine";
+                        }
+                        else{
+                            staff_frequency = "at least " + numbers[frequency];
+                        }
+
+                        $(".main_title").after("<div class='alert alert-danger alert-dismissible fade show' role='alert'>" +
+                            "  <strong>Warning! " + " </strong><b>" + shifts[i].staff_first_name + " " + 
+                            shifts[i].staff_last_name + " (id: " + shifts[i].staff_sid + ")</b> was assigned in " + staff_frequency +
+                            " consecutive weeks starting from <b>" + new Date(shifts[i].start_time).format("DD-MMM-YYYY") +
+                            "</b> This could not be automatically resolved. It may require manual intervention." +
+                            "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+                            "<span aria-hidden='true'>&times;</span> " +
+                            "</button> " +
+                            "</div>"); 
+                        
+                        frequency = 2;
+                        check = true;
+                    }
+                }
+            },
+        });
     });
 
 });
