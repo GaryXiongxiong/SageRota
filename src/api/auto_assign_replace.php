@@ -1,9 +1,9 @@
 <?php
 session_start();
 //    This part is used to control unauthenticated request, uncomment these before deploy
-//    if(!(isset($_SESSION['suid'])&&isset($_SESSION['level'])&&$_SESSION['level']==1)){
-//        return;
-//    }
+    if(!(isset($_SESSION['suid'])&&isset($_SESSION['level'])&&$_SESSION['level']==1)){
+        return;
+    }
 header("Content-Type:Application/json;charset=utf-8");
 $datainfo = file_get_contents("data.json");
 $conninfo = json_decode($datainfo);
@@ -55,7 +55,7 @@ if (count($staffs) < 1) {
     for ($i = 0; $i < count($allWeeks); $i++) {
         $sd = date('Ymd', strtotime($allWeeks[$i]));
         $ed = date('Ymd', strtotime($allWeeks[$i] . ' + 6 days'));
-        // check if $j is not the index of the last week 
+        // check if $j is not the index of the last week
         if ($i != count($allWeeks) - 1) {
             $text = "($staffs[$j],$sd,$ed),";
         } else {
@@ -128,7 +128,7 @@ if (count($staffs) < 1) {
                     if (in_array($startDatesOfNewShifts[$i], $allWeeks)) {
                         // loop while staff at week[$i] is the same staff at week[$i+1] and $check = true
                         while ($newAssignedStaff[$startDatesOfNewShifts[$i]] == $newAssignedStaff[$startDatesOfNewShifts[$i + 1]] && $check) {
-                            // check if the staff at the current shift is same staff at the previous shift; this is done after 
+                            // check if the staff at the current shift is same staff at the previous shift; this is done after
                             // confirming that current shift is not shift[0]
                             if ($i > 0) {
                                 $check2 = ($newAssignedStaff[$startDatesOfNewShifts[$i - 1]] != $finalStaffList3[$j]);
@@ -199,7 +199,7 @@ if (count($staffs) < 1) {
                 }
             }
         }
-    } 
+    }
     // if staff auto-assignment querry was unseccesseful
     else {
         $flag = $conn->error;

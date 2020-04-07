@@ -1,9 +1,9 @@
 <?php
 session_start();
 //    This part is used to control unauthenticated request, uncomment these before deploy
-//    if(!(isset($_SESSION['suid'])&&isset($_SESSION['level'])&&$_SESSION['level']==1)){
-//        return;
-//    }
+    if(!(isset($_SESSION['suid'])&&isset($_SESSION['level'])&&$_SESSION['level']==1)){
+        return;
+    }
 header("Content-Type:Application/json;charset=utf-8");
 $datainfo = file_get_contents("data.json");
 $conninfo = json_decode($datainfo);
@@ -59,7 +59,7 @@ if (count($staffs) < 1) {
         $flag = "fail, insufficient slots";
     } else {
         // if there are empty weeks
-        
+
         // if there are no registered shifts or there exists only one staff in the system
         if (count($oldShifts) == 0 || count($staffs) == 1)  {
             // final staff list equals all registered staff
@@ -81,7 +81,7 @@ if (count($staffs) < 1) {
             // this for-loop is to create the list of staff that would make even and fiar auto-staff-assignment
             for ($i = 1; $i <= $max; $i++) {
                 for ($j = 0; $j < count($staffs); $j++) {
-                    // if staff (staffs[$j]) is one of the previously assigned staff, then add him to the final 
+                    // if staff (staffs[$j]) is one of the previously assigned staff, then add him to the final
                     // staff list only if his frequency of appearance is less than or equal to $i
                     if (array_key_exists($staffs[$j], $availableStaff)) {
                         if ($availableStaff[$staffs[$j]] <= $i) {
@@ -94,7 +94,7 @@ if (count($staffs) < 1) {
                     }
                 }
             }
-        } 
+        }
 
         // preparing query to insert staff from the final staff list into the empty weeks
         $sql_in = "INSERT INTO shift(staff_sid, start_time, end_time) 
@@ -108,12 +108,12 @@ if (count($staffs) < 1) {
             // if the current week is not the last empty week
             if ($i != count($emptyWeeks) - 1) {
                 $text = "($finalStaffList[$j],$sd,$ed),";
-            } 
+            }
             // if the current week is the last empty week
             else {
                 $text = "($finalStaffList[$j],$sd,$ed)";
             }
-            // update $sql_in text 
+            // update $sql_in text
             $sql_in = "$sql_in$text";
             // increment $j by one
             $j++;
@@ -123,7 +123,7 @@ if (count($staffs) < 1) {
                 // if $j is greater than or equals the count of the final staff list, reset it to zero
                 if ($j >= count($finalStaffList))
                     $j = 0;
-            } 
+            }
             // if check equals false and $j is greater than or equals the count of the final staff list, then
             // set finalstafflist to equal the list of all registered staff and set $j to zero and $check to true
             else if ($j >= count($finalStaffList)) {
@@ -133,7 +133,7 @@ if (count($staffs) < 1) {
             }
         }
 
-        // check if query was successfully executed 
+        // check if query was successfully executed
         if ($conn->query($sql_in) === TRUE) {
             // if yes
             $flag = "success";
@@ -159,12 +159,12 @@ if (count($staffs) < 1) {
                     $temp = array_shift($a2);
                 if ($startDatesOfNewShifts[count($startDatesOfNewShifts) - 1] == $edate2)
                     $temp = array_pop($a2);
-                
+
                 // get list of new staff with their frequency of appearance
                 $availableStaff2 = array_count_values($a2);
                 // get the greatest number of staff appearance
                 $max2 = max($availableStaff2);
-                
+
                 // get list of staff who were not assigned in any shift
                 $finalStaffList2 = array_values(array_diff($staffs, array_keys($availableStaff2)));
                 // this for-loop is to create the list of staff that would make even and fiar auto-staff-assignment
@@ -195,7 +195,7 @@ if (count($staffs) < 1) {
                         if (in_array($startDatesOfNewShifts[$i], $emptyWeeks)) {
                             // loop while staff at week[$i] is the same staff at week[$i+1] and $check = true
                             while ($newAssignedStaff[$startDatesOfNewShifts[$i]] == $newAssignedStaff[$startDatesOfNewShifts[$i + 1]] && $check) {
-                                // check if the staff at the current shift is same staff at the previous shift; this is done after 
+                                // check if the staff at the current shift is same staff at the previous shift; this is done after
                                 // confirming that current shift is not shift[0]
                                 if ($i > 0) {
                                     $check2 = ($newAssignedStaff[$startDatesOfNewShifts[$i - 1]] != $finalStaffList3[$j]);
@@ -269,7 +269,7 @@ if (count($staffs) < 1) {
                     }
                 }
             }
-        } 
+        }
         // if staff auto-assignment querry was unseccesseful
         else {
             $flag = "fail,cannot run query";

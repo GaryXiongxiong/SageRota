@@ -1,20 +1,31 @@
+/**
+ * Get parameter in url
+ * @param name Name of the parameter
+ * @returns {string|null} The value of the parameter
+ */
 function getUrlParam(name) {
     let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-    let r = window.location.search.substr(1).match(reg);
-    if (r != null) return unescape(r[2]);
+    let param = window.location.search.substr(1).match(reg);
+    if (param != null) return unescape(param[2]);
     return null;
 }
 
+/**
+ * Display loading modal
+ */
 function showLoading() {
     $("#loading-popup").modal("show");
 }
 
+/**
+ * Remove loading modal
+ */
 function removeLoading() {
     $("#loading-popup").modal("hide");
 }
 
 /**
- * Get session to determine if user has logged in.
+ * Get session to determine if supervisor user has logged in.
  * @returns {{level: number, name: string, suid: number}} When the user has not logged in, level will be -1
  */
 function suAuthenticate() {
@@ -37,6 +48,10 @@ function suAuthenticate() {
     return {level:level,suid:suid,name:name};
 }
 
+/**
+ * Get session to determine if staff user has logged in.
+ * @returns {{level: number, name: string, sid: number}} When the user has not logged in, level will be -1
+ */
 function authenticate() {
     let level=-1;
     let sid=0;
@@ -57,6 +72,11 @@ function authenticate() {
     return {level:level,sid:sid,name:name};
 }
 
+/**
+ * Load navigation
+ * @param index The index of current page in navigation bar
+ * @param auth The authentication info of current user
+ */
 function loadNav(index,auth){
     if(auth.level===1){
         $("navigation").load("components/su-nav.html",function () {
@@ -93,6 +113,10 @@ function loadNav(index,auth){
     }
 }
 
+/**
+ * Generate a random password
+ * @returns {string} The generated password
+ */
 function randomPwd(){
     let charset = "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678";
     let length = charset.length;

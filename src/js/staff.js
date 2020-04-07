@@ -203,7 +203,7 @@ function loadContent(page) {
             }
             removeLoading();
             bindDeleteEvent();
-            bindEditEvent();
+            bindEditEvent(page);
         },
     });
 }
@@ -254,7 +254,7 @@ function bindDeleteEvent() {
     });
 }
 
-function bindEditEvent() {
+function bindEditEvent(page) {
     $(".btn-staff-edit").click(function () {
         let sid = $(this).parents(".staff-info").attr("data-id");
         let first_name = $(this).parents(".staff-info").attr("data-name");
