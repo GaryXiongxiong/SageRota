@@ -148,21 +148,9 @@ $(document).ready(function () {
 
     $("#confirm-auto-assign").click(function () {
         //Define start date and end date
-        let startDate = new Date($(".datepicker_start").datepicker('getDate'));
-        let endDate = new Date($(".datepicker_end").datepicker('getDate'));
-
-        if (endDate < startDate) {
-            //loadContent();
-            $("#auto-assign-shift-popup").modal("hide");
-            $(".main_title").after("<div class='alert alert-danger alert-dismissible fade show' role='alert'>" +
-                "  <strong>End date cannot be earlier than start date!</strong>" +
-                "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
-                "<span aria-hidden='true'>&times;</span> " +
-                "</button> " +
-                "</div>");
-            return;
-
-        }
+        let period = $("#auto-assign-st-date-btn").datepicker('getDate').split(" - ");
+        let startDate = new Date(period[0]);
+        let endDate = new Date(period[1]);
         // Get first and last mondays of the selected period
         let firstMonday = getPreviousMonday(startDate);
 
@@ -232,7 +220,7 @@ $(document).ready(function () {
                 let numbers = {2:"two", 3:"three", 4:"four", 5:"five", 6:"six", 7:"seven", 8:"eight", 9:"nine"};
                 let frequency = 2;
                 let check = true;
-                
+
                 // the following loops for alerting the user if any staff was assigned in two or more consecutive weeks
                 for(let i=shifts.length-1;i>=0;i--)
                 {
@@ -241,7 +229,7 @@ $(document).ready(function () {
                     while(check && j > 0)
                     {
                         // check if the same staff appeared in indexes j and j+1 of the shifts list
-                        if(shifts[j].staff_sid == shifts[j - 1].staff_sid)
+                        if(shifts[j].staff_sid === shifts[j - 1].staff_sid)
                         {
                             // increment frequency by one and decrease i and j by one
                             frequency++;
@@ -253,12 +241,12 @@ $(document).ready(function () {
                         }
                     }
 
-                    // the following check and if statement is to check for the condition when there is no 
-                    // need for printing anything at all 
+                    // the following check and if statement is to check for the condition when there is no
+                    // need for printing anything at all
                     let check2 = false;
                     if (shifts.length>1)
                     {
-                        check2 = (temp_i == 0 && shifts[0].staff_sid == shifts[1].staff_sid); 
+                        check2 = (temp_i === 0 && shifts[0].staff_sid === shifts[1].staff_sid);
                     }
 
                     // if the condition above is met
@@ -275,15 +263,15 @@ $(document).ready(function () {
                         }
 
                         $(".main_title").after("<div class='alert alert-danger alert-dismissible fade show' role='alert'>" +
-                            "  <strong>Warning! " + " </strong><b>" + shifts[i].staff_first_name + " " + 
+                            "  <strong>Warning! " + " </strong><b>" + shifts[i].staff_first_name + " " +
                             shifts[i].staff_last_name + " (id: " + shifts[i].staff_sid + ")</b> was assigned in " + staff_frequency +
                             " consecutive weeks starting from <b>" + new Date(shifts[i].start_time).format("DD-MMM-YYYY") +
                             "</b> This could not be automatically resolved. It may require manual intervention." +
                             "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
                             "<span aria-hidden='true'>&times;</span> " +
                             "</button> " +
-                            "</div>"); 
-                        
+                            "</div>");
+
                         frequency = 2;
                         check = true;
                     }
@@ -490,7 +478,6 @@ function bindDeleteEvent() {
 
 function bindEditEvent() {
     $(".btn-shift-edit").click(function () {
-        let id = $(this).parents(".shift-info").attr("data-id");
         let startDate = $(this).parents(".shift-info").attr("data-date");
         $("#edit-shift-popup").modal("show");
         $.ajax({
@@ -566,11 +553,12 @@ function bindAutoAssignEvent() {
     $(".btn-shift-auto-assign").click(function () {
         $("#auto-assign-shift-popup").modal("show");
     });
-    $(".datepicker_start").datepicker({
-        weekStart: 1
-    });
-    $(".datepicker_end").datepicker({
-        weekStart: 1
+    let curDate = new Date();
+    let endDate = new Date(curDate.getTime()+7*24*60*60*1000);
+    $("#auto-assign-st-date-btn").datepicker({
+        type: 'date-range',
+        weekStart: 1,
+        defaultValue: curDate.format("YYYY-MM-DD")+" - "+endDate.format("YYYY-MM-DD")
     });
 }
 
