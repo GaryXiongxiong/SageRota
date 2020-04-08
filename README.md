@@ -26,10 +26,10 @@
 
 ## References
 
-- [jQuery](https://jquery.com/)
-- [Bootstrap](https://getbootstrap.com)
-- [JQuery.datepicker](https://github.com/gregzhang616/jquery-datepicker)
-- [js-date-format](https://github.com/UziTech/js-date-format)
-- [bootstrap-select](https://github.com/snapappointments/bootstrap-select/)
-- [js-sha256](https://github.com/emn178/js-sha256)
-- [CKEditor](https://github.com/ckeditor/ckeditor4)
+- [jQuery](https://jquery.com/) src/lib/jquery-3.4.1.min.js src/lib/jquery.cookie.js
+- [Bootstrap](https://getbootstrap.com) src/bootstrap
+- [JQuery.datepicker](https://github.com/gregzhang616/jquery-datepicker) src/lib/jquery.datepicker.min.js
+- [js-date-format](https://github.com/UziTech/js-date-format) src/lib/js-date-format.min.js
+- [bootstrap-select](https://github.com/snapappointments/bootstrap-select/) src/lib/bootstrap-select.min.js src/lib/bootstrap-select.min.css
+- [js-sha256](https://github.com/emn178/js-sha256) src/lib/sha256.min.js
+- [CKEditor](https://github.com/ckeditor/ckeditor4) src/ckeditor

@@ -210,7 +210,7 @@ function loadContent(page) {
 
 function appendStaff(staff) {
     let staffContent =
-        "<div class='col-lg-4 col-md-6 staff-info' data-id='" + staff.sid + "' data-name='" + staff.first_name + "'>" +
+        "<div class='col-lg-4 col-md-6 staff-info' data-id='" + staff.sid + "'>" +
         "                <div class='card'>" +
         "                    <div class='card-body'>" +
         "                        <h5>" + staff.first_name + " " + staff.last_name + "</h5>" +
@@ -230,7 +230,10 @@ function appendStaff(staff) {
         "                    </div>" +
         "                </div>" +
         "            </div>";
-    $("#staff-list").append(staffContent);
+    let staffDom = $(staffContent);
+    //Add data-name attribute externally, because some symbol in name will cause bugs during string joining
+    staffDom.attr("data-name",staff.first_name);
+    $("#staff-list").append(staffDom);
 }
 
 function bindDeleteEvent() {
@@ -240,7 +243,6 @@ function bindDeleteEvent() {
         //bind delete popup
         $("#delete-staff-popup").modal("show");
         //bind confirm delete to send request
-        //console.log("delete:"+sid+","+first_name);
         $("#delete-staff-form #delete_sid").val(sid);
         $("#delete-staff-form #delete_name").val(first_name);
         $("#delete-staff-popup #cancel-delete").click(function () {

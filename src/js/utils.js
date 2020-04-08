@@ -94,7 +94,9 @@ function loadNav(index,auth){
                 datatype:"json",
                 success: function (result) {
                     let unread = result.unread;
-                    $("[href='feedback.html']").append('<span class="badge badge-pill badge-primary ml-1">'+unread+'</span>\n');
+                    if(unread>0){
+                        $("[href='feedback.html']").append('<span class="badge badge-pill badge-primary ml-1">'+unread+'</span>\n');
+                    }
                 }
             });
         })
