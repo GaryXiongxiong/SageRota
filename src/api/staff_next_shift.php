@@ -1,4 +1,7 @@
 <?php
+/*
+ * Request staff's next shift information
+ */
 session_start();
 //    This part is used to control unauthenticated request, uncomment these before deploy
     if(!(isset($_SESSION['sid'])&&isset($_SESSION['level'])&&$_SESSION['level']==0)){

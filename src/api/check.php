@@ -1,4 +1,7 @@
 <?php
+/*
+ * Check if there are conflict in the given period
+ */
 session_start();
 //    This part is used to control unauthenticated request, uncomment these before deploy
     if(!(isset($_SESSION['suid'])&&isset($_SESSION['level'])&&$_SESSION['level']==1)){

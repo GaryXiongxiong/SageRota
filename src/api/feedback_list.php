@@ -1,4 +1,7 @@
 <?php
+/*
+ * List feedback in given page
+ */
 session_start();
 //    This part is used to control unauthenticated request, uncomment these before deploy
     if(!(isset($_SESSION['suid'])&&isset($_SESSION['level'])&&$_SESSION['level']==1)){

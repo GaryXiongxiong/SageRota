@@ -1,4 +1,7 @@
 <?php
+/*
+ * Set status of a feedback to read
+ */
 session_start();
 //    This part is used to control unauthenticated request, uncomment these before deploy
     if(!(isset($_SESSION['suid'])&&isset($_SESSION['level'])&&$_SESSION['level']==1)){

@@ -1,4 +1,7 @@
 <?php
+/*
+ * Add feedback to feedback table
+ */
 session_start();
 //    This part is used to control unauthenticated request, uncomment these before deploy
     if(!(isset($_SESSION['sid'])&&isset($_SESSION['level'])&&$_SESSION['level']==0)){

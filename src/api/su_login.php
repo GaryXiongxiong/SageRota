@@ -1,4 +1,7 @@
 <?php
+/*
+ * Login as supervisor
+ */
 session_start();
 header("Content-Type:Application/json;charset=utf-8");
 $datainfo = file_get_contents("data.json");

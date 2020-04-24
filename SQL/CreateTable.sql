@@ -1,3 +1,4 @@
+# Staff table
 create table if not exists staff
 (
     sid int auto_increment
@@ -16,6 +17,7 @@ create table if not exists staff
         unique (phone_number)
 );
 
+# Timetable
 create table if not exists shift
 (
     id int auto_increment
@@ -33,6 +35,7 @@ create table if not exists shift
         foreign key (staff_sid) references staff (sid)
 );
 
+# Supervisor table
 create table if not exists supervisor
 (
     SuId int auto_increment
@@ -45,6 +48,7 @@ create table if not exists supervisor
         unique (e_mail)
 );
 
+# Announcement Table
 create table if not exists announcement
 (
     aid int auto_increment
@@ -58,6 +62,7 @@ create table if not exists announcement
             on update cascade on delete set null
 );
 
+# Feedback Table
 create table if not exists feedback
 (
     fid int auto_increment

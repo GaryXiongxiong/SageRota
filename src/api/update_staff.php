@@ -1,4 +1,7 @@
 <?php
+/*
+ * Amend information of given staff
+ */
 session_start();
 //    This part is used to control unauthenticated request, uncomment these before deploy
 //    Need to check if current user is supervisor or the staff himself

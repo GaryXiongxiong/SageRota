@@ -1,4 +1,7 @@
 <?php
+/*
+ * Reset password for supervisor users
+ */
 session_start();
 if (!(isset($_SESSION['suid']) && isset($_SESSION['level']) && $_SESSION['level'] == 1)) {
     return;

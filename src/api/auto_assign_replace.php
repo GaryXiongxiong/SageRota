@@ -1,4 +1,7 @@
 <?php
+/*
+ * Auto assign staff to given period with overwriting
+ */
 session_start();
 //    This part is used to control unauthenticated request, uncomment these before deploy
     if(!(isset($_SESSION['suid'])&&isset($_SESSION['level'])&&$_SESSION['level']==1)){

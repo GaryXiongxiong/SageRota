@@ -1,4 +1,7 @@
 <?php
+/*
+ * Get authorization status for supervisor users
+ */
 session_start();
 header("Content-Type:Application/json;charset=utf-8");
 $flag = "";

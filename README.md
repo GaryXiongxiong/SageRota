@@ -1,5 +1,33 @@
 # Sage Rota
 
+## Login Info
+
+### Address:
+http://cs-csc8005-06.ncl.ac.uk
+### Supervisor Login E-mail:
+    y.jiang34@newcastle.ac.uk
+### Supervisor Password:
+    supervisor
+### Staff Login E-mail:
+    xinchi@gmail.com
+Note: Every staff in staff list could user e-mail in their profile to login
+### Staff login Password:
+    xinchiyu
+Note: Supervisor could reset staff’s password in staff list
+
+## Folders
+
+    ├─SQL               # DDL
+    └─src               # Source code
+        ├─api           # PHP file directory
+        ├─bootstrap     # Bootstrap lib
+        ├─ckeditor      #CKeditor lib
+        ├─components    # Common reusable components
+        ├─css           # Stylesheet
+        ├─img           # Images
+        ├─js            # Jaavascript file
+        └─lib           # Outter libraries
+
 ## Functions implemented
 
 - Two type of users

@@ -1,4 +1,7 @@
 <?php
+/*
+ * Reset password for staff user
+ */
 session_start();
 if (isset($_SESSION['sid']) && isset($_SESSION['level']) && $_SESSION['level'] == 0) {
     header("Content-Type:Application/json;charset=utf-8");
