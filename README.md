@@ -10,7 +10,7 @@ http://cs-csc8005-06.ncl.ac.uk
     supervisor
 ### Staff Login E-mail:
     xinchi@gmail.com
-Note: Every staff in staff list could user e-mail in their profile to login
+Note: Every staff in staff list could use e-mail in their profile to login
 ### Staff login Password:
     xinchiyu
 Note: Supervisor could reset staff’s password in staff list
