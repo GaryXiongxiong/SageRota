@@ -17,7 +17,7 @@ Note: Supervisor could reset staff’s password in staff list
 
 ## Folders
 
-    ├─SQL               # DDL
+    ├─SQL               # Database Defination Code
     └─src               # Source code
         ├─api           # PHP file directory
         ├─bootstrap     # Bootstrap lib
